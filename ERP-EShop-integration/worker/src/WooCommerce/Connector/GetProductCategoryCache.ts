@@ -25,7 +25,7 @@ export default class GetProductCategoryCache extends AConnector {
             dto,
             await this.getApplicationInstallFromProcess(dto),
             HttpMethods.GET,
-            'wp-json/wc/v3/products/categories',
+            `wp-json/wc/v3/products/categories?slug=${slug}`,
         );
 
         const foundSlug = await this.cacheService.entry<string>(
@@ -33,11 +33,10 @@ export default class GetProductCategoryCache extends AConnector {
             req,
             // eslint-disable-next-line @typescript-eslint/require-await
             async (responseDto): Promise<ICacheCallback<string>> => {
-                const data = responseDto.getJsonBody() as IOutput[];
-                const found = data.find((item) => item.slug === slug);
+                const { slug: requestedSlug } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
                 return {
                     expire: 3600 * 24,
-                    dataToStore: found?.slug ?? '',
+                    dataToStore: requestedSlug ?? '',
                 };
             },
             { success: 200 },

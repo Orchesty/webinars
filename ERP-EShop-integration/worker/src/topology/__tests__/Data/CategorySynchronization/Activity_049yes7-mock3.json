@@ -1,0 +1,5 @@
+{
+  "http": "GET http://woocommerce.com/wp-json/wc/v3/products/categories?slug=classics",
+  "code": 200,
+  "body": []
+}

@@ -15,6 +15,10 @@ describe('Tests for CategorySynchronization topology', () => {
     it('run CategorySynchronization from Cron', async () => {
         mockMysql();
         mockWooCommerce();
+        mockWooCommerce();
+        mockWooCommerce();
+        mockWooCommerce();
+        mockWooCommerce();
 
         const dto = new ProcessDto();
         dto.setUser(DEFAULT_USER);
