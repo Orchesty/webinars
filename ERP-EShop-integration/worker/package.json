@@ -15,7 +15,8 @@
   "dependencies": {
     "@orchesty/nodejs-connectors": "^3.0.37",
     "@orchesty/nodejs-sdk": "^4.2.29",
-    "axios": "^1.4.0"
+    "axios": "^1.4.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@hanaboso/eslint-plugin": "^1.0.8",

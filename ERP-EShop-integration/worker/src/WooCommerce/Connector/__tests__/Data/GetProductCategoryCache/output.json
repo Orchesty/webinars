@@ -1,5 +1,7 @@
 {
     "headers": {
+        "result-code": "1003",
+        "result-message": "Product category was already created!",
         "user": "TestUser"
     },
     "data": {

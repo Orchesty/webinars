@@ -1,5 +1,5 @@
 import { createLoggerMockedServer, createMetricsMockedServer } from '@orchesty/nodejs-sdk/dist/test/MockServer';
-import {closeConnections, dm, prepare} from "../test/TestAbstract";
+import {closeConnections, dm, prepare, redis} from "../test/TestAbstract";
 
 jest.setTimeout(10000);
 
@@ -10,6 +10,7 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
+  await redis.dropAll();
   dm.getApplicationRepository().clearCache();
 })
 

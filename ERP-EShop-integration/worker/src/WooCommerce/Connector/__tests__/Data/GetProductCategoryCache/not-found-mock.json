@@ -1,0 +1,108 @@
+{
+  "http": "GET http://woocommerce.com/wp-json/wc/v3/products/categories",
+  "code": 200,
+  "body": [
+    {
+      "id": 15,
+      "name": "Albums",
+      "slug": "albums",
+      "parent": 11,
+      "description": "",
+      "display": "default",
+      "image": [],
+      "menu_order": 0,
+      "count": 4,
+      "_links": {
+        "self": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/15"
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories"
+          }
+        ],
+        "up": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/11"
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Hoodies",
+      "slug": "hoodies",
+      "parent": 9,
+      "description": "",
+      "display": "default",
+      "image": [],
+      "menu_order": 0,
+      "count": 6,
+      "_links": {
+        "self": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/10"
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories"
+          }
+        ],
+        "up": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/9"
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Music",
+      "slug": "music",
+      "parent": 0,
+      "description": "",
+      "display": "default",
+      "image": [],
+      "menu_order": 0,
+      "count": 7,
+      "_links": {
+        "self": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/11"
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "Posters",
+      "slug": "posters",
+      "parent": 0,
+      "description": "",
+      "display": "default",
+      "image": [],
+      "menu_order": 0,
+      "count": 5,
+      "_links": {
+        "self": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories/12"
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://example.com/wp-json/wc/v3/products/categories"
+          }
+        ]
+      }
+    }
+  ]
+}

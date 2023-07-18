@@ -10,13 +10,18 @@
         <bpmn:sequenceFlow id="Flow_1by7zk8" sourceRef="Event_0d0fnoq" targetRef="Activity_1b94jjx"/>
         <bpmn:task id="Activity_0fg3kk1" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="sql-to-woo-commerce-category-mapper" pipes:sdkHostName="worker" pipes:appName="">
             <bpmn:incoming>Flow_057uyuj</bpmn:incoming>
-            <bpmn:outgoing>Flow_1d2b0cb</bpmn:outgoing>
+            <bpmn:outgoing>Flow_1cv72tz</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_057uyuj" sourceRef="Activity_1b94jjx" targetRef="Activity_0fg3kk1"/>
-        <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="">
-            <bpmn:incoming>Flow_1d2b0cb</bpmn:incoming>
+        <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_0wfe5h7</bpmn:incoming>
         </bpmn:task>
-        <bpmn:sequenceFlow id="Flow_1d2b0cb" sourceRef="Activity_0fg3kk1" targetRef="Activity_1ksfd5f"/>
+        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="get-product-category-cache" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_1cv72tz</bpmn:incoming>
+            <bpmn:outgoing>Flow_0wfe5h7</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_1cv72tz" sourceRef="Activity_0fg3kk1" targetRef="Activity_049yes7"/>
+        <bpmn:sequenceFlow id="Flow_0wfe5h7" sourceRef="Activity_049yes7" targetRef="Activity_1ksfd5f"/>
     </bpmn:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1">
         <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="category-synchronization">
@@ -34,8 +39,12 @@
                 <dc:Bounds x="450" y="90" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_049yes7_di" bpmnElement="Activity_049yes7">
+                <dc:Bounds x="620" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_1ksfd5f_di" bpmnElement="Activity_1ksfd5f">
-                <dc:Bounds x="610" y="90" width="100" height="80"/>
+                <dc:Bounds x="790" y="90" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge id="Flow_1by7zk8_di" bpmnElement="Flow_1by7zk8">
@@ -46,9 +55,13 @@
                 <di:waypoint x="390" y="130"/>
                 <di:waypoint x="450" y="130"/>
             </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge id="Flow_1d2b0cb_di" bpmnElement="Flow_1d2b0cb">
+            <bpmndi:BPMNEdge id="Flow_1cv72tz_di" bpmnElement="Flow_1cv72tz">
                 <di:waypoint x="550" y="130"/>
-                <di:waypoint x="610" y="130"/>
+                <di:waypoint x="620" y="130"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0wfe5h7_di" bpmnElement="Flow_0wfe5h7">
+                <di:waypoint x="720" y="130"/>
+                <di:waypoint x="790" y="130"/>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
