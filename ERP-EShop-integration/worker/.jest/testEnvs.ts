@@ -7,7 +7,9 @@ process.env.STARTING_POINT_URL = 'http://127.0.0.42:8080'
 process.env.WORKER_API_HOST = 'http://127.0.0.42:8080'
 
 if (process.env.JEST_DOCKER) {
-  // --- DOCKER ---
+    process.env.MYSQL_HOST = 'db';
+    process.env.REDIS_DSN = 'redis://redis'
 } else {
-  // --- LOCALHOST ---
+    process.env.MYSQL_HOST = '127.0.0.42';
+    process.env.REDIS_DSN = 'redis://127.0.0.42'
 }

@@ -18,3 +18,18 @@ services:
             WORKER_API_HOST: 'http://127.0.0.42:8080'
             ORCHESTY_API_KEY: 'ThisIsNotSoSecretApiKey'
         command: sleep infinity
+
+    db:
+        image: mysql:5
+        environment:
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: wpuser
+            MYSQL_PASSWORD: wpuser
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - ${DEV_IP}:3306:3306
+
+    redis:
+        image: redis:alpine
+        ports:
+            - ${DEV_IP}:6379:6379

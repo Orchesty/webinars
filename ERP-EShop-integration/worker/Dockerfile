@@ -31,4 +31,4 @@ WORKDIR /srv/app
 COPY --from=build /srv/app/dist/src /srv/app
 COPY --from=precache /tmp/_node_prod /srv/app
 
-CMD node index.js
+CMD node server.js

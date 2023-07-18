@@ -1,4 +1,5 @@
 DCS=docker-compose exec -T worker
+DCM=docker-compose exec -T db
 IMAGE=EDIT_ME:$(TAG)
 
 ALIAS?=alias
@@ -53,3 +54,6 @@ localtest:
 fasttest: lint unit
 
 test: docker-up-force install fasttest docker-down-clean
+
+database-initialize:
+	$(DCM) mysql -uroot -proot < ../ERP/init.sql;
