@@ -30,15 +30,6 @@ export default class InsertOrderLine extends ASqlConnector {
     }
 
     protected processResult(res: { rows: number }, dto: ProcessDto<IInput>): ProcessDto<IInput> {
-        // const { order, orderLines } = dto.getJsonData();
-        //
-        // order.customerId = res.rows;
-        //
-        // dto.setNewJsonData({
-        //     order,
-        //     orderLines,
-        // });
-
         return dto;
     }
 
