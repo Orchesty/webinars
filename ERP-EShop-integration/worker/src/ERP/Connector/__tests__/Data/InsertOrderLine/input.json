@@ -1,0 +1,21 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": {
+        "orderLines": [
+            {
+                "orderDate": "2017-03-22",
+                "orderId": 12001,
+                "prodId": 93,
+                "quantity": 2
+            },
+            {
+                "orderDate": "2017-03-22",
+                "orderId": 12001,
+                "prodId": 22,
+                "quantity": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "headers": {
+        "force-target-queue": "2",
+        "result-code": "1002",
+        "result-message": "Message will be force re-routed to [2] follower(s).",
+        "user": "TestUser",
+        "worker-followers": "[{\"id\":\"1\",\"name\":\"insert-customer\"},{\"id\":\"2\",\"name\":\"order-exists\"}]"
+    },
+    "data": {
+        "order": {
+            "orderDate": "2017-03-22",
+            "orderNumber": 727,
+            "tax": 1.35,
+            "totalAmount": 29.35
+        },
+        "orderLines": [
+            {
+                "orderDate": "2017-03-22",
+                "prodId": 93,
+                "quantity": 2
+            },
+            {
+                "orderDate": "2017-03-22",
+                "prodId": 22,
+                "quantity": 1
+            }
+        ]
+    }
+}

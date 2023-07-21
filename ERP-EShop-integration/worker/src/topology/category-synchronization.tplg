@@ -8,7 +8,7 @@
             <bpmn:outgoing>Flow_057uyuj</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_1by7zk8" sourceRef="Event_0d0fnoq" targetRef="Activity_1b94jjx"/>
-        <bpmn:task id="Activity_0fg3kk1" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="sql-to-woo-commerce-category-mapper" pipes:sdkHostName="worker" pipes:appName="">
+        <bpmn:task id="Activity_0fg3kk1" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="erp-to-woo-commerce-category-mapper" pipes:sdkHostName="worker" pipes:appName="">
             <bpmn:incoming>Flow_057uyuj</bpmn:incoming>
             <bpmn:outgoing>Flow_1cv72tz</bpmn:outgoing>
         </bpmn:task>

@@ -1,9 +1,0 @@
-{
-    "headers": {
-        "user": "TestUser"
-    },
-    "data": {
-        "category": 1,
-        "categoryName": "Action"
-    }
-}
