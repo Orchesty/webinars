@@ -10,7 +10,7 @@ import { PASSWORD, USER } from '@orchesty/nodejs-sdk/dist/lib/Authorization/Type
 import { orchestyOptions } from '@orchesty/nodejs-sdk/dist/lib/Config/Config';
 import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
 import { appInstallConfig, mockOnce } from '@orchesty/nodejs-sdk/dist/test/MockServer';
-import { MYSQL_NAME } from '../src/Sql/Batch/ListAllCategories';
+import { MYSQL_NAME } from '../src/ERP/Batch/ListAllCategories';
 
 export const DEFAULT_USER = 'TestUser';
 export const DEFAULT_PASSWORD = 'Password';

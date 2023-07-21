@@ -1,0 +1,37 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": {
+        "customer": {
+            "address1": "969 Market",
+            "address2": "",
+            "city": "San Francisco",
+            "country": "US",
+            "email": "john.doe@example.com",
+            "firstName": "John",
+            "lastName": "Doe",
+            "phone": "(555) 555-5555",
+            "state": "CA",
+            "zip": 94103
+        },
+        "order": {
+            "orderDate": "2017-03-22",
+            "orderNumber": 727,
+            "tax": 1.35,
+            "totalAmount": 29.35
+        },
+        "orderLines": [
+            {
+                "orderDate": "2017-03-22",
+                "prodId": 93,
+                "quantity": 2
+            },
+            {
+                "orderDate": "2017-03-22",
+                "prodId": 22,
+                "quantity": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:pipes="http://www.omg.org/spec/Pipes/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+    <bpmn:process id="order-synchronize" isExecutable="false">
+        <bpmn:event id="Event_0qezjq1" pipes:pipesType="cron" pipes:sdkHost="worker:8080" name="cron" pipes:sdkHostName="worker">
+            <bpmn:outgoing>Flow_15k9p91</bpmn:outgoing>
+        </bpmn:event>
+        <bpmn:task id="Activity_08qf6ch" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="woo-commerce-to-erp-order-mapper" pipes:sdkHostName="worker" pipes:appName="">
+            <bpmn:incoming>Flow_1ibixml</bpmn:incoming>
+            <bpmn:outgoing>Flow_147855q</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:task id="Activity_0y80ozw" pipes:pipesType="batch" pipes:sdkHost="worker:8080" name="woocommerce-get-orders" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_15k9p91</bpmn:incoming>
+            <bpmn:outgoing>Flow_1ibixml</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_15k9p91" sourceRef="Event_0qezjq1" targetRef="Activity_0y80ozw"/>
+        <bpmn:sequenceFlow id="Flow_1ibixml" sourceRef="Activity_0y80ozw" targetRef="Activity_08qf6ch"/>
+        <bpmn:task id="Activity_1ax9kq6" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="customer-exists" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_147855q</bpmn:incoming>
+            <bpmn:outgoing>Flow_0gv5w3p</bpmn:outgoing>
+            <bpmn:outgoing>Flow_0sbcccw</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_147855q" sourceRef="Activity_08qf6ch" targetRef="Activity_1ax9kq6"/>
+        <bpmn:task id="Activity_15jdqil" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="insert-customer" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_0gv5w3p</bpmn:incoming>
+            <bpmn:outgoing>Flow_1chyqal</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0gv5w3p" sourceRef="Activity_1ax9kq6" targetRef="Activity_15jdqil"/>
+        <bpmn:task id="Activity_1rlbg4q" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="order-exists" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_0sbcccw</bpmn:incoming>
+            <bpmn:incoming>Flow_1chyqal</bpmn:incoming>
+            <bpmn:outgoing>Flow_0xtlfkn</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0sbcccw" sourceRef="Activity_1ax9kq6" targetRef="Activity_1rlbg4q"/>
+        <bpmn:sequenceFlow id="Flow_1chyqal" sourceRef="Activity_15jdqil" targetRef="Activity_1rlbg4q"/>
+        <bpmn:task id="Activity_1skyz5r" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="insert-order" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_0xtlfkn</bpmn:incoming>
+            <bpmn:outgoing>Flow_0y2ef3b</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0xtlfkn" sourceRef="Activity_1rlbg4q" targetRef="Activity_1skyz5r"/>
+        <bpmn:task id="Activity_1geekm3" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="insert-order-line" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_0y2ef3b</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0y2ef3b" sourceRef="Activity_1skyz5r" targetRef="Activity_1geekm3"/>
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-synchronize">
+            <bpmndi:BPMNShape id="Event_0qezjq1_di" bpmnElement="Event_0qezjq1">
+                <dc:Bounds x="202" y="282" width="36" height="36"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="209" y="325" width="22" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0y80ozw_di" bpmnElement="Activity_0y80ozw">
+                <dc:Bounds x="310" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_08qf6ch_di" bpmnElement="Activity_08qf6ch">
+                <dc:Bounds x="480" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1ax9kq6_di" bpmnElement="Activity_1ax9kq6">
+                <dc:Bounds x="660" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1rlbg4q_di" bpmnElement="Activity_1rlbg4q">
+                <dc:Bounds x="850" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_15jdqil_di" bpmnElement="Activity_15jdqil">
+                <dc:Bounds x="660" y="390" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1skyz5r_di" bpmnElement="Activity_1skyz5r">
+                <dc:Bounds x="1030" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1geekm3_di" bpmnElement="Activity_1geekm3">
+                <dc:Bounds x="1220" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="Flow_15k9p91_di" bpmnElement="Flow_15k9p91">
+                <di:waypoint x="238" y="300"/>
+                <di:waypoint x="310" y="300"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_1ibixml_di" bpmnElement="Flow_1ibixml">
+                <di:waypoint x="410" y="300"/>
+                <di:waypoint x="480" y="300"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_147855q_di" bpmnElement="Flow_147855q">
+                <di:waypoint x="580" y="300"/>
+                <di:waypoint x="660" y="300"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0gv5w3p_di" bpmnElement="Flow_0gv5w3p">
+                <di:waypoint x="710" y="340"/>
+                <di:waypoint x="710" y="390"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0sbcccw_di" bpmnElement="Flow_0sbcccw">
+                <di:waypoint x="760" y="300"/>
+                <di:waypoint x="850" y="300"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_1chyqal_di" bpmnElement="Flow_1chyqal">
+                <di:waypoint x="760" y="430"/>
+                <di:waypoint x="900" y="430"/>
+                <di:waypoint x="900" y="340"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0xtlfkn_di" bpmnElement="Flow_0xtlfkn">
+                <di:waypoint x="950" y="300"/>
+                <di:waypoint x="1030" y="300"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0y2ef3b_di" bpmnElement="Flow_0y2ef3b">
+                <di:waypoint x="1130" y="300"/>
+                <di:waypoint x="1220" y="300"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
