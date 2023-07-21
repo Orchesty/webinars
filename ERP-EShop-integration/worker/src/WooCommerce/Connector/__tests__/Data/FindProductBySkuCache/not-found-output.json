@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "result-code": "1003",
+        "result-message": "Product was not found in WooCommerce!",
+        "user": "TestUser"
+    },
+    "data": {
+        "sku": "1976",
+        "stock_quantity": 138,
+        "total_sales": 9
+    }
+}

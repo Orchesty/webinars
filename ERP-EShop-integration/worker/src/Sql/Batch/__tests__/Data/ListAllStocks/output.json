@@ -1,0 +1,47 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": [
+        {
+            "body": "{\"productId\":1,\"stockQuantity\":138,\"sales\":9,\"sku\":1976}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":2,\"stockQuantity\":118,\"sales\":19,\"sku\":6289}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":3,\"stockQuantity\":228,\"sales\":11,\"sku\":7173}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":4,\"stockQuantity\":279,\"sales\":12,\"sku\":8042}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":5,\"stockQuantity\":382,\"sales\":13,\"sku\":2183}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":6,\"stockQuantity\":109,\"sales\":14,\"sku\":5243}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":7,\"stockQuantity\":90,\"sales\":10,\"sku\":7700}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":8,\"stockQuantity\":357,\"sales\":6,\"sku\":9191}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":9,\"stockQuantity\":215,\"sales\":27,\"sku\":6633}",
+            "headers": {}
+        },
+        {
+            "body": "{\"productId\":10,\"stockQuantity\":105,\"sales\":16,\"sku\":631}",
+            "headers": {}
+        }
+    ]
+}

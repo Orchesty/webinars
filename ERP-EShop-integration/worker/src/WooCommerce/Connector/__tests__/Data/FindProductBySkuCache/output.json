@@ -1,0 +1,11 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": {
+        "id": "799",
+        "sku": "1976",
+        "stock_quantity": 138,
+        "total_sales": 9
+    }
+}

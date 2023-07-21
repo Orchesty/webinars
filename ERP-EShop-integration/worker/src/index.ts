@@ -9,8 +9,12 @@ import Redis from '@orchesty/nodejs-sdk/dist/lib/Storage/Redis/Redis';
 import CurlSender from '@orchesty/nodejs-sdk/dist/lib/Transport/Curl/CurlSender';
 import { redis } from './config/config';
 import ListAllCategories from './Sql/Batch/ListAllCategories';
+import ListAllStocks from './Sql/Batch/ListAllStocks';
+import FindProductBySkuCache from './WooCommerce/Connector/FindProductBySkuCache';
 import GetProductCategoryCache from './WooCommerce/Connector/GetProductCategoryCache';
+import WooCommerceUpdateProduct from './WooCommerce/Connector/WooCommerceUpdateProduct';
 import SqlToWooCommerceCategoryMapper from './WooCommerce/CustomNode/SqlToWooCommerceCategoryMapper';
+import SqlToWooCommerceProductMapper from './WooCommerce/CustomNode/SqlToWooCommerceProductMapper';
 
 export default function prepare(): void {
     // Load core services by:
@@ -33,10 +37,20 @@ export default function prepare(): void {
         .setApplication(mySqlApplication);
     container.setBatch(listAllCategories);
 
+    const listAllStocks = new ListAllStocks();
+    listAllStocks
+        .setDb(db)
+        .setApplication(mySqlApplication);
+    container.setBatch(listAllStocks);
+
     const wooCommerceApplication = new WooCommerceApplication();
     container.setApplication(wooCommerceApplication);
 
     container.setNode(new WooCommerceCreateProductCategory(), wooCommerceApplication);
     container.setNode(new SqlToWooCommerceCategoryMapper());
     container.setNode(new GetProductCategoryCache(cacheService), wooCommerceApplication);
+
+    container.setNode(new SqlToWooCommerceProductMapper());
+    container.setNode(new FindProductBySkuCache(cacheService), wooCommerceApplication);
+    container.setNode(new WooCommerceUpdateProduct(), wooCommerceApplication);
 }
