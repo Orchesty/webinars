@@ -20,6 +20,7 @@ services:
             STARTING_POINT_DSN: ${STARTING_POINT_DSN}
             WORKER_API_HOST: ${WORKER_API_HOST}
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
+            REDIS_DSN: redis://redis
         command: sh -c 'pnpm run start'
         mem_limit: 512MB
         depends_on:
@@ -195,6 +196,8 @@ services:
             MYSQL_USER: wpuser
             MYSQL_PASSWORD: wpuser
             MYSQL_ROOT_PASSWORD: root
+        ports:
+            - ${DEV_IP}:3306:3306
         volumes:
             - ./WooCommerce/init.sql:/docker-entrypoint-initdb.d/init-woo.sql:cached
             - ./ERP/init.sql:/docker-entrypoint-initdb.d/init-erp.sql:cached
@@ -204,6 +207,11 @@ services:
         image: adminer
         ports:
             - ${DEV_IP}:8888:8080
+
+    redis:
+        image: redis:alpine
+        ports:
+            - ${DEV_IP}:6379:6379
 
 volumes:
     mysql:

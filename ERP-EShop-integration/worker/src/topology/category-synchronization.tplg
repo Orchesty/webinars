@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:pipes="http://www.omg.org/spec/Pipes/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+    <bpmn:process id="category-synchronization" isExecutable="false">
+        <bpmn:event id="Event_0d0fnoq" pipes:pipesType="cron" pipes:sdkHost="worker:8080" name="cron" pipes:sdkHostName="worker">
+            <bpmn:outgoing>Flow_1by7zk8</bpmn:outgoing>
+        </bpmn:event>
+        <bpmn:task id="Activity_1b94jjx" pipes:pipesType="batch" pipes:sdkHost="worker:8080" name="list-all-categories" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_1by7zk8</bpmn:incoming>
+            <bpmn:outgoing>Flow_057uyuj</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_1by7zk8" sourceRef="Event_0d0fnoq" targetRef="Activity_1b94jjx"/>
+        <bpmn:task id="Activity_0fg3kk1" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="sql-to-woo-commerce-category-mapper" pipes:sdkHostName="worker" pipes:appName="">
+            <bpmn:incoming>Flow_057uyuj</bpmn:incoming>
+            <bpmn:outgoing>Flow_1cv72tz</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_057uyuj" sourceRef="Activity_1b94jjx" targetRef="Activity_0fg3kk1"/>
+        <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_0wfe5h7</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="get-product-category-cache" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_1cv72tz</bpmn:incoming>
+            <bpmn:outgoing>Flow_0wfe5h7</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_1cv72tz" sourceRef="Activity_0fg3kk1" targetRef="Activity_049yes7"/>
+        <bpmn:sequenceFlow id="Flow_0wfe5h7" sourceRef="Activity_049yes7" targetRef="Activity_1ksfd5f"/>
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="category-synchronization">
+            <bpmndi:BPMNShape id="Event_0d0fnoq_di" bpmnElement="Event_0d0fnoq">
+                <dc:Bounds x="202" y="112" width="36" height="36"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="209" y="155" width="22" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1b94jjx_di" bpmnElement="Activity_1b94jjx">
+                <dc:Bounds x="290" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0fg3kk1_di" bpmnElement="Activity_0fg3kk1">
+                <dc:Bounds x="450" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_049yes7_di" bpmnElement="Activity_049yes7">
+                <dc:Bounds x="620" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1ksfd5f_di" bpmnElement="Activity_1ksfd5f">
+                <dc:Bounds x="790" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="Flow_1by7zk8_di" bpmnElement="Flow_1by7zk8">
+                <di:waypoint x="238" y="130"/>
+                <di:waypoint x="290" y="130"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_057uyuj_di" bpmnElement="Flow_057uyuj">
+                <di:waypoint x="390" y="130"/>
+                <di:waypoint x="450" y="130"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_1cv72tz_di" bpmnElement="Flow_1cv72tz">
+                <di:waypoint x="550" y="130"/>
+                <di:waypoint x="620" y="130"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0wfe5h7_di" bpmnElement="Flow_0wfe5h7">
+                <di:waypoint x="720" y="130"/>
+                <di:waypoint x="790" y="130"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
