@@ -24,20 +24,11 @@ import WooCommerceUpdateProduct from './WooCommerce/Connector/WooCommerceUpdateP
 import ERPToWooCommerceCategoryMapper from './WooCommerce/CustomNode/ERPToWooCommerceCategoryMapper';
 import ERPToWooCommerceProductMapper from './WooCommerce/CustomNode/ERPToWooCommerceProductMapper';
 
-export default function prepare(): void {
-    // Load core services by:
-    initiateContainer();
-
-    const redisService = new Redis(redis.host);
-    container.set(redisService);
-    const curlService = container.get(CurlSender);
-    const cacheService = new CacheService(redisService, curlService);
-    container.set(cacheService);
-
-    const db = container.get(DatabaseClient);
-
+function initializeERP(): void {
     const mySqlApplication = new MySqlApplication();
     container.setApplication(mySqlApplication);
+
+    const db = container.get(DatabaseClient);
 
     const listAllCategories = new ListAllCategories();
     listAllCategories
@@ -80,18 +71,32 @@ export default function prepare(): void {
         .setDb(db)
         .setApplication(mySqlApplication);
     container.setConnector(insertOrderLine as unknown as ICommonNode);
+}
 
+function initializeWooCommerce(cacheService: CacheService): void {
     const wooCommerceApplication = new WooCommerceApplication();
     container.setApplication(wooCommerceApplication);
 
     container.setNode(new WooCommerceCreateProductCategory(), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceCategoryMapper());
     container.setNode(new GetProductCategoryCache(cacheService), wooCommerceApplication);
-
     container.setNode(new ERPToWooCommerceProductMapper());
     container.setNode(new FindProductBySkuCache(cacheService), wooCommerceApplication);
     container.setNode(new WooCommerceUpdateProduct(), wooCommerceApplication);
-
     container.setNode(new WooCommerceToERPOrderMapper());
     container.setNode(new WooCommerceGetOrders(), wooCommerceApplication);
+}
+
+export default function prepare(): void {
+    // Load core services by:
+    initiateContainer();
+
+    const redisService = new Redis(redis.host);
+    container.set(redisService);
+    const curlService = container.get(CurlSender);
+    const cacheService = new CacheService(redisService, curlService);
+    container.set(cacheService);
+
+    initializeERP();
+    initializeWooCommerce(cacheService);
 }
