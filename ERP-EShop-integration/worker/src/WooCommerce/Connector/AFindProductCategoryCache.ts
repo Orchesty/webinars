@@ -5,18 +5,12 @@ import CacheService, { ICacheCallback } from '@orchesty/nodejs-sdk/dist/lib/Cach
 import AConnector from '@orchesty/nodejs-sdk/dist/lib/Connector/AConnector';
 import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
-import ResultCode from '@orchesty/nodejs-sdk/dist/lib/Utils/ResultCode';
 
-export const NAME = 'get-product-category-cache';
-
-export default class GetProductCategoryCache extends AConnector {
+// TODO rich refactor na find
+export default abstract class AFindProductCategoryCache extends AConnector {
 
     public constructor(private readonly cacheService: CacheService) {
         super();
-    }
-
-    public getName(): string {
-        return NAME;
     }
 
     public async processAction(dto: ProcessDto<IOutput>): Promise<ProcessDto<IOutput>> {
@@ -31,8 +25,7 @@ export default class GetProductCategoryCache extends AConnector {
         const foundSlug = await this.cacheService.entry<string>(
             slug ?? '',
             req,
-            // eslint-disable-next-line @typescript-eslint/require-await
-            async (responseDto): Promise<ICacheCallback<string>> => {
+            (responseDto): ICacheCallback<string> => {
                 const { slug: requestedSlug } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
                 return {
                     expire: 3600 * 24,
@@ -42,11 +35,12 @@ export default class GetProductCategoryCache extends AConnector {
             { success: 200 },
         );
 
-        if (foundSlug) {
-            dto.setStopProcess(ResultCode.DO_NOT_CONTINUE, 'Product category was already created!');
-        }
+        this.processFoundSlug(foundSlug, dto);
 
         return dto;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    protected processFoundSlug(foundSlug: string, dto: ProcessDto): void {}
 
 }

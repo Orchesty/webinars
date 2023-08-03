@@ -1,5 +1,6 @@
 import { createLoggerMockedServer, createMetricsMockedServer } from '@orchesty/nodejs-sdk/dist/test/MockServer';
-import {closeConnections, dm, prepare, redis} from "../test/TestAbstract";
+import {closeConnections, container, dm, prepare, redis} from "../test/TestAbstract";
+import {StoredCategoryProductRelationRepository} from "../src/Database/StoredCategoryProductRelationRepository";
 
 jest.setTimeout(10000);
 
@@ -12,6 +13,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   await redis.dropAll();
   dm.getApplicationRepository().clearCache();
+  await container.get(StoredCategoryProductRelationRepository).deleteAll();
 })
 
 afterAll(async () => {

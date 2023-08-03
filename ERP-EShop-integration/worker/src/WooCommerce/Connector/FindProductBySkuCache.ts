@@ -29,8 +29,7 @@ export default class FindProductBySkuCache extends AConnector {
         const foundId = await this.cacheService.entry<string>(
             sku ?? '',
             req,
-            // eslint-disable-next-line @typescript-eslint/require-await
-            async (responseDto): Promise<ICacheCallback<string>> => ({
+            (responseDto): ICacheCallback<string> => ({
                 expire: 3600 * 24,
                 dataToStore: (responseDto.getJsonBody() as IOutput[])[0]?.id?.toString() ?? '',
             }),

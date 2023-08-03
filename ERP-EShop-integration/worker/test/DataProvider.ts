@@ -54,7 +54,7 @@ export function appInstall(
     );
 }
 
-export function mockMysql(): void {
+export function mockMysql(nonEncryptedSettings = {}): void {
     appInstall(
         MYSQL_NAME,
         DEFAULT_USER,
@@ -67,6 +67,7 @@ export function mockMysql(): void {
                 database: 'erp',
             },
         },
+        nonEncryptedSettings,
     );
 }
 

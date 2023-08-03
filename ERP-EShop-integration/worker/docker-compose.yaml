@@ -17,6 +17,7 @@ services:
             STARTING_POINT_DSN: 'http://127.0.0.42:8080'
             WORKER_API_HOST: 'http://127.0.0.42:8080'
             ORCHESTY_API_KEY: 'ThisIsNotSoSecretApiKey'
+            MONGODB_DSN: 'mongodb://127.0.0.42:27017/webinars'
         command: sleep infinity
 
     db:
@@ -33,3 +34,13 @@ services:
         image: redis:alpine
         ports:
             - ${DEV_IP}:6379:6379
+
+    mongo:
+        image: mongo
+        ports:
+            - ${DEV_IP}:27017:27017
+        volumes:
+            - mongodb:/data/db
+
+volumes:
+    mongodb:

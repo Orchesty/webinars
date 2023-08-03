@@ -1,17 +1,15 @@
 import NodeTester from '@orchesty/nodejs-sdk/dist/test/Testers/NodeTester';
-import { mockMysql } from '../../../../test/DataProvider';
 import { container } from '../../../../test/TestAbstract';
-import { NAME as LIST_ALL_CATEGORIES } from '../ListAllCategories';
+import { NAME as ERP_TO_WOO_COMMERCE_INVENTORY_MAPPER } from '../ERPToWooCommerceInventoryMapper';
 
 let tester: NodeTester;
 
-describe('Tests for ListAllCategories', () => {
+describe('Tests for ERPToWooCommerceInventoryMapper', () => {
     beforeAll(() => {
         tester = new NodeTester(container, __filename);
     });
 
     it('process - ok', async () => {
-        mockMysql();
-        await tester.testBatch(LIST_ALL_CATEGORIES);
+        await tester.testCustomNode(ERP_TO_WOO_COMMERCE_INVENTORY_MAPPER);
     });
 });

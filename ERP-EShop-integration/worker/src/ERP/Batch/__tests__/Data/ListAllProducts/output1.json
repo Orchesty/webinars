@@ -1,0 +1,50 @@
+{
+    "headers": {
+        "cursor": "20",
+        "result-code": "1010",
+        "result-message": "Message will be used as a iterator with cursor [20]. Data will be send to follower(s).",
+        "user": "TestUser"
+    },
+    "data": [
+        {
+            "body": "{\"id\":11,\"name\":\"ACADEMY ALAMO\",\"price\":\"26.99\",\"sku\":5398,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Classics\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":12,\"name\":\"ACADEMY ALASKA\",\"price\":\"23.99\",\"sku\":393,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Drama\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":13,\"name\":\"ACADEMY ALI\",\"price\":\"24.99\",\"sku\":7386,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Family\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":14,\"name\":\"ACADEMY ALICE\",\"price\":\"12.99\",\"sku\":8801,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Horror\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":15,\"name\":\"ACADEMY ALIEN\",\"price\":\"27.99\",\"sku\":6867,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Sci-Fi\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":16,\"name\":\"ACADEMY ALLEY\",\"price\":\"27.99\",\"sku\":9240,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Travel\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":17,\"name\":\"ACADEMY ALONE\",\"price\":\"28.99\",\"sku\":2159,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Drama\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":18,\"name\":\"ACADEMY ALTER\",\"price\":\"27.99\",\"sku\":4320,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Travel\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":19,\"name\":\"ACADEMY AMADEUS\",\"price\":\"15.99\",\"sku\":2262,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Games\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":20,\"name\":\"ACADEMY AMELIE\",\"price\":\"17.99\",\"sku\":9069,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Classics\"}",
+            "headers": {}
+        }
+    ]
+}

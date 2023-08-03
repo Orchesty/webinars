@@ -3,9 +3,12 @@
         "user": "TestUser"
     },
     "data": {
-        "productId": 1,
-        "stockQuantity": 138,
-        "sales": 9,
-        "sku": 1976
+        "id": 1,
+        "name": "ACADEMY ACADEMY",
+        "price": "25.99",
+        "sku": 1976,
+        "date_created": "2015-04-03T14:00:45.000Z",
+        "slug": "Sci-Fi",
+        "categoryId": 14
     }
 }

@@ -1,0 +1,11 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": [
+        {
+            "body": "{\"id\":1,\"name\":\"ACADEMY ACADEMY\",\"price\":\"25.99\",\"sku\":1976,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"slug\":\"Sci-Fi\",\"categoryId\":14}",
+            "headers": {}
+        }
+    ]
+}

@@ -14,4 +14,9 @@ describe('Tests for ListAllCategories', () => {
         mockMysql();
         await tester.testBatch(LIST_ALL_CATEGORIES);
     });
+
+    it('process - with ids', async () => {
+        mockMysql();
+        await tester.testBatch(LIST_ALL_CATEGORIES, 'ids');
+    });
 });
