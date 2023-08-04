@@ -11,7 +11,6 @@ export default class FindProductBySkuCacheSyncInventory extends AFindProductBySk
         return NAME;
     }
 
-    // TODO rich projit vsechny topologie, jestli sedi uzly
     protected processFoundId(foundId: string, dto: ProcessDto<IOutput>): void {
         const data = dto.getJsonData();
         if (!foundId) {

@@ -102,8 +102,7 @@ function initializeWooCommerce(
     container.setApplication(wooCommerceApplication);
 
     const topologyRunner = container.get(TopologyRunner);
-    // TODO rich doplnit nazev topologie
-    container.setNode(new RunProductsTopology(storedCategoryProductRelationRepository, topologyRunner, '', 'cron'));
+    container.setNode(new RunProductsTopology(storedCategoryProductRelationRepository, topologyRunner, 'product-synchronization', 'cron'));
     container.setNode(new RunTopology(topologyRunner, 'category-synchronization', 'cron'));
     container.setNode(new WooCommerceCreateProductCategory(), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceCategoryMapper());

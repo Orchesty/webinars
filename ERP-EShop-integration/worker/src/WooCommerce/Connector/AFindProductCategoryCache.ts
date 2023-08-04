@@ -6,7 +6,6 @@ import AConnector from '@orchesty/nodejs-sdk/dist/lib/Connector/AConnector';
 import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
 
-// TODO rich refactor na find
 export default abstract class AFindProductCategoryCache extends AConnector {
 
     public constructor(private readonly cacheService: CacheService) {

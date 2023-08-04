@@ -4,8 +4,7 @@ import { StoredCategoryProductRelationRepository } from '../../Database/StoredCa
 
 let tester: NodeTester;
 
-// TODO rich doplnit
-const RUN_TOPOLOGY = '-cron-run-topology';
+const RUN_TOPOLOGY = 'product-synchronization-cron-run-topology';
 
 describe('Tests for RunProductsTopology', () => {
     beforeAll(() => {

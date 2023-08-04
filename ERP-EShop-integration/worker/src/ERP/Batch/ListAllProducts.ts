@@ -41,8 +41,6 @@ export default class ListAllProducts extends ASqlBatchConnector {
 
         baseQuery += ` LIMIT ${LIMIT} OFFSET ${offset}`;
 
-        // TODO rich doresit testy
-        // TODO rich vyresit last run
         return String(baseQuery);
     }
 
