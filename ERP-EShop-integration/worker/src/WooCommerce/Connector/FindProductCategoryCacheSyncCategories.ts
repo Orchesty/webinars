@@ -2,7 +2,7 @@ import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
 import ResultCode from '@orchesty/nodejs-sdk/dist/lib/Utils/ResultCode';
 import AFindProductCategoryCache from './AFindProductCategoryCache';
 
-export const NAME = 'get-product-category-cache-sync-categories';
+export const NAME = 'find-product-category-cache-sync-categories';
 
 export default class FindProductCategoryCacheSyncCategories extends AFindProductCategoryCache {
 

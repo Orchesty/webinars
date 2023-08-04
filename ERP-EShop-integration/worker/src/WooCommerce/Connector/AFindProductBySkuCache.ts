@@ -3,22 +3,15 @@ import CacheService, { ICacheCallback } from '@orchesty/nodejs-sdk/dist/lib/Cach
 import AConnector from '@orchesty/nodejs-sdk/dist/lib/Connector/AConnector';
 import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
-import ResultCode from '@orchesty/nodejs-sdk/dist/lib/Utils/ResultCode';
 
-export const NAME = 'find-product-by-sku-cache';
-
-export default class FindProductBySkuCache extends AConnector {
+export default abstract class AFindProductBySkuCache extends AConnector {
 
     public constructor(private readonly cacheService: CacheService) {
         super();
     }
 
-    public getName(): string {
-        return NAME;
-    }
-
     public async processAction(dto: ProcessDto<IOutput>): Promise<ProcessDto<IOutput>> {
-        const { sku, ...rest } = dto.getJsonData();
+        const { sku } = dto.getJsonData();
         const req = await this.getApplication().getRequestDto(
             dto,
             await this.getApplicationInstallFromProcess(dto),
@@ -36,17 +29,12 @@ export default class FindProductBySkuCache extends AConnector {
             { success: 200 },
         );
 
-        if (!foundId) {
-            dto.setStopProcess(ResultCode.DO_NOT_CONTINUE, 'Product was not found in WooCommerce!');
-        } else {
-            dto.setNewJsonData({
-                ...rest,
-                sku,
-                id: foundId,
-            });
-        }
+        this.processFoundId(foundId, dto);
 
         return dto;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    protected processFoundId(foundId: string, dto: ProcessDto): void {}
 
 }

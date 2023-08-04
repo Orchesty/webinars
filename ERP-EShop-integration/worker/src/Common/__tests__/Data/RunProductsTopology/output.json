@@ -1,4 +1,38 @@
 {
-    "headers": {},
-    "data": {}
+    "headers": {
+        "result-code": "1003",
+        "user": "TestUser"
+    },
+    "data": {
+        "_links": {
+            "collection": [
+                {
+                    "href": "https://example.com/wp-json/wc/v3/products/categories"
+                }
+            ],
+            "self": [
+                {
+                    "href": "https://example.com/wp-json/wc/v3/products/categories/9"
+                }
+            ]
+        },
+        "count": 36,
+        "description": "",
+        "display": "default",
+        "id": 9,
+        "image": {
+            "alt": "",
+            "date_created": "2017-03-23T00:01:07",
+            "date_created_gmt": "2017-03-23T03:01:07",
+            "date_modified": "2017-03-23T00:01:07",
+            "date_modified_gmt": "2017-03-23T03:01:07",
+            "id": 730,
+            "name": "",
+            "src": "https://example.com/wp-content/uploads/2017/03/T_2_front.jpg"
+        },
+        "menu_order": 0,
+        "name": "Clothing",
+        "parent": 0,
+        "slug": "clothing"
+    }
 }

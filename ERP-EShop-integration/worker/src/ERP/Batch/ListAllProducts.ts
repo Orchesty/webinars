@@ -1,6 +1,6 @@
 import ASqlBatchConnector from '@orchesty/nodejs-connectors/dist/lib/Sql/Common/ASqlBatchConnector';
 import BatchProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/BatchProcessDto';
-import { IOutput as IRunTopologyInput } from '../../Common/ARunTopology';
+import { IOutput as IRunTopologyInput } from '../../Common/RunProductsTopology';
 import { IInput } from './ListAllCategories';
 
 export const NAME = 'list-all-products';

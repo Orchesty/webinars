@@ -1,39 +1,34 @@
-import AConnector from '@orchesty/nodejs-sdk/dist/lib/Connector/AConnector';
-import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
+import { IOutput } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetProducts';
+import { NAME as WOOCOMMERCE_CREATE_PRODUCT } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProduct';
+import { NAME as WOOCOMMERCE_UPDATE_PRODUCT } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceUpdateProduct';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
+import { IInput } from '../CustomNode/ERPToWooCommerceProductMapper';
+import AFindProductBySkuCache from './AFindProductBySkuCache';
 
 export const NAME = 'find-product-by-sku-cache-sync-products';
 
-export default class FindProductBySkuCacheSyncProducts extends AConnector {
+export default class FindProductBySkuCacheSyncProducts extends AFindProductBySkuCache {
 
     public getName(): string {
         return NAME;
     }
 
-    // public async processAction(dto: ProcessDto<IInput>): Promise<ProcessDto<IOutput>> {
-    public async processAction(dto: ProcessDto): Promise<ProcessDto> {
-        const req = await this.getApplication().getRequestDto(
-            dto,
-            await this.getApplicationInstallFromProcess(dto),
-            HttpMethods.GET,
-            'endpoint',
-        );
-        // const resp = await this.getSender().send<IResponse>(req, [200]);
-        const resp = await this.getSender().send(req, [200]);
+    protected processFoundId(foundId: string, dto: ProcessDto<IInput>): void {
+        const { name, price, date_created, sku } = dto.getJsonData();
 
-        return dto.setNewJsonData(resp.getJsonBody());
+        dto.setNewJsonData<IOutput>({
+            name,
+            price,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            date_created,
+            sku,
+            id: Number(foundId),
+        });
+        if (!foundId) {
+            dto.setForceFollowers(WOOCOMMERCE_CREATE_PRODUCT);
+        } else {
+            dto.setForceFollowers(WOOCOMMERCE_UPDATE_PRODUCT);
+        }
     }
 
 }
-
-// interface IResponse {
-//
-// }
-//
-// export interface IInput {
-//
-// }
-//
-// export interface IOutput {
-//
-// }

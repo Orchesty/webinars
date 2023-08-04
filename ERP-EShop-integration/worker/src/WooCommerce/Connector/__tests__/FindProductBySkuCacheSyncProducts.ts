@@ -1,6 +1,7 @@
 import NodeTester from '@orchesty/nodejs-sdk/dist/test/Testers/NodeTester';
+import { mockWooCommerce } from '../../../../test/DataProvider';
 import { container } from '../../../../test/TestAbstract';
-import { NAME as FIND_PRODUCT_BY_SKU_CACHE_SYNC_PRODUCTS } from '../FindProductBySkuCacheSyncProducts';
+import { NAME as FIND_PRODUCT_BY_SKU_CACHE } from '../FindProductBySkuCacheSyncProducts';
 
 let tester: NodeTester;
 
@@ -10,6 +11,12 @@ describe('Tests for FindProductBySkuCacheSyncProducts', () => {
     });
 
     it('process - ok', async () => {
-        await tester.testConnector(FIND_PRODUCT_BY_SKU_CACHE_SYNC_PRODUCTS);
+        mockWooCommerce();
+        await tester.testConnector(FIND_PRODUCT_BY_SKU_CACHE);
+    });
+
+    it('process - not found', async () => {
+        mockWooCommerce();
+        await tester.testConnector(FIND_PRODUCT_BY_SKU_CACHE, 'not-found');
     });
 });

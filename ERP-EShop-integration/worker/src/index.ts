@@ -1,5 +1,8 @@
+import RunTopology from '@orchesty/nodejs-connectors/dist/lib/Common/RunTopology/RunTopology';
 import MySqlApplication from '@orchesty/nodejs-connectors/dist/lib/Sql/MySqlApplication';
 import WooCommerceGetOrders from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetOrders';
+import WooCommerceCreateProduct
+    from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProduct';
 import WooCommerceCreateProductCategory
     from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProductCategory';
 import WooCommerceApplication from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/WooCommerceApplication';
@@ -11,7 +14,7 @@ import { MongoDb } from '@orchesty/nodejs-sdk/dist/lib/Storage/Mongo';
 import Redis from '@orchesty/nodejs-sdk/dist/lib/Storage/Redis/Redis';
 import TopologyRunner from '@orchesty/nodejs-sdk/dist/lib/Topology/TopologyRunner';
 import CurlSender from '@orchesty/nodejs-sdk/dist/lib/Transport/Curl/CurlSender';
-import ARunTopology from './Common/ARunTopology';
+import RunProductsTopology from './Common/RunProductsTopology';
 import { mongodb, redis } from './config/config';
 import { StoredCategoryProductRelationRepository } from './Database/StoredCategoryProductRelationRepository';
 import ListAllCategories from './ERP/Batch/ListAllCategories';
@@ -24,7 +27,7 @@ import InsertOrderLine from './ERP/Connector/InsertOrderLine';
 import OrderExists from './ERP/Connector/OrderExists';
 import StoreRelation from './ERP/CustomNode/StoreRelation';
 import WooCommerceToERPOrderMapper from './ERP/CustomNode/WooCommerceToERPOrderMapper';
-import FindProductBySkuCache from './WooCommerce/Connector/FindProductBySkuCache';
+import FindProductBySkuCacheSyncInventory from './WooCommerce/Connector/FindProductBySkuCacheSyncInventory';
 import FindProductBySkuCacheSyncProducts from './WooCommerce/Connector/FindProductBySkuCacheSyncProducts';
 import FindProductCategoryCacheSyncCategories from './WooCommerce/Connector/FindProductCategoryCacheSyncCategories';
 import FindProductCategoryCacheSyncProducts from './WooCommerce/Connector/FindProductCategoryCacheSyncProducts';
@@ -100,17 +103,19 @@ function initializeWooCommerce(
 
     const topologyRunner = container.get(TopologyRunner);
     // TODO rich doplnit nazev topologie
-    container.setNode(new ARunTopology(storedCategoryProductRelationRepository, topologyRunner, '', 'cron'));
+    container.setNode(new RunProductsTopology(storedCategoryProductRelationRepository, topologyRunner, '', 'cron'));
+    container.setNode(new RunTopology(topologyRunner, 'category-synchronization', 'cron'));
     container.setNode(new WooCommerceCreateProductCategory(), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceCategoryMapper());
     container.setNode(new FindProductCategoryCacheSyncCategories(cacheService), wooCommerceApplication);
     container.setNode(new FindProductCategoryCacheSyncProducts(cacheService), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceInventoryMapper());
-    container.setNode(new FindProductBySkuCache(cacheService), wooCommerceApplication);
+    container.setNode(new FindProductBySkuCacheSyncInventory(cacheService), wooCommerceApplication);
+    container.setNode(new FindProductBySkuCacheSyncProducts(cacheService), wooCommerceApplication);
     container.setNode(new WooCommerceUpdateProduct(), wooCommerceApplication);
+    container.setNode(new WooCommerceCreateProduct(), wooCommerceApplication);
     container.setNode(new WooCommerceGetOrders(), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceProductMapper());
-    container.setNode(new FindProductBySkuCacheSyncProducts());
 }
 
 export default function prepare(): void {

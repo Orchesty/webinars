@@ -16,7 +16,7 @@
         <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_0wfe5h7</bpmn:incoming>
         </bpmn:task>
-        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="get-product-category-cache" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-category-cache-sync-categories" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_1cv72tz</bpmn:incoming>
             <bpmn:outgoing>Flow_0wfe5h7</bpmn:outgoing>
         </bpmn:task>
@@ -39,12 +39,12 @@
                 <dc:Bounds x="450" y="90" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape id="Activity_049yes7_di" bpmnElement="Activity_049yes7">
-                <dc:Bounds x="620" y="90" width="100" height="80"/>
-                <bpmndi:BPMNLabel/>
-            </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_1ksfd5f_di" bpmnElement="Activity_1ksfd5f">
                 <dc:Bounds x="790" y="90" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_049yes7_di" bpmnElement="Activity_049yes7">
+                <dc:Bounds x="620" y="90" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge id="Flow_1by7zk8_di" bpmnElement="Flow_1by7zk8">

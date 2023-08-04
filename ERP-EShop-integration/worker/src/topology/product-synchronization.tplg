@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:pipes="http://www.omg.org/spec/Pipes/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+    <bpmn:process id="product-synchronization" isExecutable="false">
+        <bpmn:event id="Event_1bn5d28" pipes:pipesType="cron" pipes:sdkHost="worker:8080" name="cron" pipes:sdkHostName="worker">
+            <bpmn:outgoing>Flow_0ovxj6n</bpmn:outgoing>
+        </bpmn:event>
+        <bpmn:task id="Activity_1lutt07" pipes:pipesType="batch" pipes:sdkHost="worker:8080" name="list-all-products" pipes:sdkHostName="worker" pipes:appName="mysql">
+            <bpmn:incoming>Flow_0ovxj6n</bpmn:incoming>
+            <bpmn:outgoing>Flow_0w0g3hm</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0ovxj6n" sourceRef="Event_1bn5d28" targetRef="Activity_1lutt07"/>
+        <bpmn:task id="Activity_0bby0cb" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="erp-to-woo-commerce-product-mapper" pipes:sdkHostName="worker" pipes:appName="">
+            <bpmn:incoming>Flow_0w0g3hm</bpmn:incoming>
+            <bpmn:outgoing>Flow_0n97lag</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0w0g3hm" sourceRef="Activity_1lutt07" targetRef="Activity_0bby0cb"/>
+        <bpmn:task id="Activity_0ddrw9c" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-category-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_0n97lag</bpmn:incoming>
+            <bpmn:outgoing>Flow_0mwhrtq</bpmn:outgoing>
+            <bpmn:outgoing>Flow_1bi695d</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0n97lag" sourceRef="Activity_0bby0cb" targetRef="Activity_0ddrw9c"/>
+        <bpmn:task id="Activity_0zpnhxz" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="store-relation" pipes:sdkHostName="worker" pipes:appName="">
+            <bpmn:incoming>Flow_0mwhrtq</bpmn:incoming>
+            <bpmn:outgoing>Flow_0fcz7jr</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0mwhrtq" sourceRef="Activity_0ddrw9c" targetRef="Activity_0zpnhxz"/>
+        <bpmn:task id="Activity_0ewv7m3" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="category-synchronization-cron-run-topology" pipes:sdkHostName="worker" pipes:appName="">
+            <bpmn:incoming>Flow_0fcz7jr</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0fcz7jr" sourceRef="Activity_0zpnhxz" targetRef="Activity_0ewv7m3"/>
+        <bpmn:task id="Activity_1owk8gw" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-by-sku-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_1bi695d</bpmn:incoming>
+            <bpmn:outgoing>Flow_02jhp5t</bpmn:outgoing>
+            <bpmn:outgoing>Flow_0nzfiqj</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_1bi695d" sourceRef="Activity_0ddrw9c" targetRef="Activity_1owk8gw"/>
+        <bpmn:task id="Activity_15e35qz" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-update-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_02jhp5t</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_02jhp5t" sourceRef="Activity_1owk8gw" targetRef="Activity_15e35qz"/>
+        <bpmn:task id="Activity_0out4if" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+            <bpmn:incoming>Flow_0nzfiqj</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0nzfiqj" sourceRef="Activity_1owk8gw" targetRef="Activity_0out4if"/>
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="product-synchronization">
+            <bpmndi:BPMNShape id="Event_1bn5d28_di" bpmnElement="Event_1bn5d28">
+                <dc:Bounds x="282" y="332" width="36" height="36"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds x="289" y="375" width="22" height="14"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1lutt07_di" bpmnElement="Activity_1lutt07">
+                <dc:Bounds x="410" y="310" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0bby0cb_di" bpmnElement="Activity_0bby0cb">
+                <dc:Bounds x="620" y="310" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0ddrw9c_di" bpmnElement="Activity_0ddrw9c">
+                <dc:Bounds x="820" y="310" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0zpnhxz_di" bpmnElement="Activity_0zpnhxz">
+                <dc:Bounds x="820" y="460" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0ewv7m3_di" bpmnElement="Activity_0ewv7m3">
+                <dc:Bounds x="1030" y="460" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1owk8gw_di" bpmnElement="Activity_1owk8gw">
+                <dc:Bounds x="1030" y="310" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_15e35qz_di" bpmnElement="Activity_15e35qz">
+                <dc:Bounds x="1230" y="310" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0out4if_di" bpmnElement="Activity_0out4if">
+                <dc:Bounds x="1230" y="160" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="Flow_0ovxj6n_di" bpmnElement="Flow_0ovxj6n">
+                <di:waypoint x="318" y="350"/>
+                <di:waypoint x="410" y="350"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0w0g3hm_di" bpmnElement="Flow_0w0g3hm">
+                <di:waypoint x="510" y="350"/>
+                <di:waypoint x="620" y="350"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0n97lag_di" bpmnElement="Flow_0n97lag">
+                <di:waypoint x="720" y="350"/>
+                <di:waypoint x="820" y="350"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0mwhrtq_di" bpmnElement="Flow_0mwhrtq">
+                <di:waypoint x="870" y="390"/>
+                <di:waypoint x="870" y="460"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0fcz7jr_di" bpmnElement="Flow_0fcz7jr">
+                <di:waypoint x="920" y="500"/>
+                <di:waypoint x="1030" y="500"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_1bi695d_di" bpmnElement="Flow_1bi695d">
+                <di:waypoint x="920" y="350"/>
+                <di:waypoint x="1030" y="350"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_02jhp5t_di" bpmnElement="Flow_02jhp5t">
+                <di:waypoint x="1130" y="350"/>
+                <di:waypoint x="1230" y="350"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="Flow_0nzfiqj_di" bpmnElement="Flow_0nzfiqj">
+                <di:waypoint x="1080" y="310"/>
+                <di:waypoint x="1080" y="200"/>
+                <di:waypoint x="1230" y="200"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
