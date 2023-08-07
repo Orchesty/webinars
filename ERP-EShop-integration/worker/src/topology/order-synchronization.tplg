@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:pipes="http://www.omg.org/spec/Pipes/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
-    <bpmn:process id="order-synchronize" isExecutable="false">
+    <bpmn:process id="order-synchronization" isExecutable="false">
         <bpmn:event id="Event_0qezjq1" pipes:pipesType="cron" pipes:sdkHost="worker:8080" name="cron" pipes:sdkHostName="worker">
             <bpmn:outgoing>Flow_15k9p91</bpmn:outgoing>
         </bpmn:event>
@@ -49,24 +49,24 @@
                     <dc:Bounds x="209" y="325" width="22" height="14"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape id="Activity_0y80ozw_di" bpmnElement="Activity_0y80ozw">
-                <dc:Bounds x="310" y="260" width="100" height="80"/>
-                <bpmndi:BPMNLabel/>
-            </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_08qf6ch_di" bpmnElement="Activity_08qf6ch">
                 <dc:Bounds x="480" y="260" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_0y80ozw_di" bpmnElement="Activity_0y80ozw">
+                <dc:Bounds x="310" y="260" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_1ax9kq6_di" bpmnElement="Activity_1ax9kq6">
                 <dc:Bounds x="660" y="260" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape id="Activity_1rlbg4q_di" bpmnElement="Activity_1rlbg4q">
-                <dc:Bounds x="850" y="260" width="100" height="80"/>
-                <bpmndi:BPMNLabel/>
-            </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_15jdqil_di" bpmnElement="Activity_15jdqil">
                 <dc:Bounds x="660" y="390" width="100" height="80"/>
+                <bpmndi:BPMNLabel/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="Activity_1rlbg4q_di" bpmnElement="Activity_1rlbg4q">
+                <dc:Bounds x="850" y="260" width="100" height="80"/>
                 <bpmndi:BPMNLabel/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape id="Activity_1skyz5r_di" bpmnElement="Activity_1skyz5r">

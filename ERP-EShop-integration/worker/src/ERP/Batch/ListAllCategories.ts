@@ -1,5 +1,6 @@
 import ASqlBatchConnector from '@orchesty/nodejs-connectors/dist/lib/Sql/Common/ASqlBatchConnector';
 import BatchProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/BatchProcessDto';
+import { IOutput as IRunTopologyInput } from '../../Common/RunProductsTopology';
 
 export const NAME = 'list-all-categories';
 export const MYSQL_NAME = 'mysql';
@@ -12,9 +13,15 @@ export default class ListAllCategories extends ASqlBatchConnector {
         return this.name;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected getQuery(processDto: BatchProcessDto): Promise<string> | string {
-        return 'SELECT CATEGORY as `category`, CATEGORYNAME as `categoryName` FROM `categories`';
+    protected getQuery(processDto: BatchProcessDto<IRunTopologyInput>): Promise<string> | string {
+        const { ids } = processDto.getJsonData();
+        let baseQuery = 'SELECT CATEGORY as `category`, CATEGORYNAME as `categoryName` FROM `categories`';
+
+        if (ids) {
+            baseQuery += ` WHERE \`CATEGORY\` IN (${ids})`;
+        }
+
+        return baseQuery;
     }
 
     protected processResult(res: IInput, dto: BatchProcessDto): BatchProcessDto {

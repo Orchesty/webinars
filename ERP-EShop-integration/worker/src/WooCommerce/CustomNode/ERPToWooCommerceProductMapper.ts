@@ -1,8 +1,7 @@
 import { IOutput } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetProducts';
 import ACommonNode from '@orchesty/nodejs-sdk/dist/lib/Commons/ACommonNode';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
-import ResultCode from '@orchesty/nodejs-sdk/dist/lib/Utils/ResultCode';
-import { IOutput as IInput } from '../../ERP/Batch/ListAllStocks';
+import slugify from 'slugify';
 
 export const NAME = 'erp-to-woo-commerce-product-mapper';
 
@@ -12,22 +11,25 @@ export default class ERPToWooCommerceProductMapper extends ACommonNode {
         return NAME;
     }
 
-    public processAction(dto: ProcessDto<IInput>): ProcessDto<IInput | IOutput> {
-        const { stockQuantity, sales, sku } = dto.getJsonData();
-
-        if (!sku) {
-            dto.setStopProcess(ResultCode.DO_NOT_CONTINUE, 'Product was not found in DB!');
-
-            return dto;
-        }
+    public processAction(dto: ProcessDto<IInput>): ProcessDto<IInput> {
+        const { id, name, price, date_created, sku, slug, categoryId } = dto.getJsonData();
 
         /* eslint-disable @typescript-eslint/naming-convention */
         return dto.setNewJsonData({
+            id,
+            name,
+            price,
+            date_created,
+            slug: slugify(slug).toLowerCase(),
+            categoryId,
             sku: String(sku),
-            stock_quantity: stockQuantity,
-            total_sales: sales,
         });
         /* eslint-enable @typescript-eslint/naming-convention */
     }
 
+}
+
+export interface IInput extends IOutput {
+    slug: string;
+    categoryId: number;
 }

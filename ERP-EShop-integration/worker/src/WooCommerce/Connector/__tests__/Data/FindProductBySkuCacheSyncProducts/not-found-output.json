@@ -1,0 +1,16 @@
+{
+    "headers": {
+        "force-target-queue": "1",
+        "result-code": "1002",
+        "result-message": "Message will be force re-routed to [1] follower(s).",
+        "user": "TestUser",
+        "worker-followers": "[{\"id\":\"1\",\"name\":\"woo-commerce-create-product\"},{\"id\":\"2\",\"name\":\"woo-commerce-update-product\"}]"
+    },
+    "data": {
+        "date_created": "2015-04-03T14:00:45.000Z",
+        "id": 0,
+        "name": "ACADEMY ACADEMY",
+        "price": "25.99",
+        "sku": "1976"
+    }
+}

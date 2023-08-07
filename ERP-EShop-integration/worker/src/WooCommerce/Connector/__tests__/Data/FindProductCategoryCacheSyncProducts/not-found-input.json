@@ -1,0 +1,15 @@
+{
+    "headers": {
+        "worker-followers": "[{\"id\":\"1\",\"name\":\"find-product-by-sku-cache-sync-products\"},{\"id\":\"2\",\"name\":\"store-relation\"}]",
+        "user": "TestUser"
+    },
+    "data": {
+        "categoryId": 14,
+        "date_created": "2015-04-03T14:00:45.000Z",
+        "id": 1,
+        "name": "ACADEMY ACADEMY",
+        "price": "25.99",
+        "sku": "1976",
+        "slug": "sci-fi"
+    }
+}

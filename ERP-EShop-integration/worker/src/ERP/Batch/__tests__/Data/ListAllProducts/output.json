@@ -1,0 +1,50 @@
+{
+    "headers": {
+        "cursor": "10",
+        "result-code": "1010",
+        "result-message": "Message will be used as a iterator with cursor [10]. Data will be send to follower(s).",
+        "user": "TestUser"
+    },
+    "data": [
+        {
+            "body": "{\"id\":1,\"name\":\"ACADEMY ACADEMY\",\"price\":\"25.99\",\"sku\":1976,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Sci-Fi\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":2,\"name\":\"ACADEMY ACE\",\"price\":\"20.99\",\"sku\":6289,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Documentary\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":3,\"name\":\"ACADEMY ADAPTATION\",\"price\":\"28.99\",\"sku\":7173,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Documentary\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":4,\"name\":\"ACADEMY AFFAIR\",\"price\":\"14.99\",\"sku\":8042,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Children\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":5,\"name\":\"ACADEMY AFRICAN\",\"price\":\"11.99\",\"sku\":2183,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Children\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":6,\"name\":\"ACADEMY AGENT\",\"price\":\"15.99\",\"sku\":5243,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Foreign\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":7,\"name\":\"ACADEMY AIRPLANE\",\"price\":\"25.99\",\"sku\":7700,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Family\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":8,\"name\":\"ACADEMY AIRPORT\",\"price\":\"16.99\",\"sku\":9191,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Drama\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":9,\"name\":\"ACADEMY ALABAMA\",\"price\":\"10.99\",\"sku\":6633,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Animation\"}",
+            "headers": {}
+        },
+        {
+            "body": "{\"id\":10,\"name\":\"ACADEMY ALADDIN\",\"price\":\"9.99\",\"sku\":631,\"date_created\":\"2015-04-03T14:00:45.000Z\",\"categoryName\":\"Sports\"}",
+            "headers": {}
+        }
+    ]
+}

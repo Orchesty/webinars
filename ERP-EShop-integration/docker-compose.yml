@@ -21,6 +21,7 @@ services:
             WORKER_API_HOST: ${WORKER_API_HOST}
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
             REDIS_DSN: redis://redis
+            MONGODB_DSN: 'mongodb://127.0.0.10:27017/webinars'
         command: sh -c 'pnpm run start'
         mem_limit: 512MB
         depends_on:

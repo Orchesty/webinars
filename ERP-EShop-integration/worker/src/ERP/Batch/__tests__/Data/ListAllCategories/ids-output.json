@@ -1,0 +1,11 @@
+{
+    "headers": {
+        "user": "TestUser"
+    },
+    "data": [
+        {
+            "body": "{\"category\":1,\"categoryName\":\"Action\"}",
+            "headers": {}
+        }
+    ]
+}

@@ -8,12 +8,12 @@
             <bpmn:outgoing>Flow_11j113s</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_11yq54y" sourceRef="Event_0hs5ahu" targetRef="Activity_1263zgj"/>
-        <bpmn:task id="Activity_1cqa8rn" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="erp-to-woo-commerce-product-mapper" pipes:sdkHostName="worker" pipes:appName="">
+        <bpmn:task id="Activity_1cqa8rn" pipes:pipesType="custom" pipes:sdkHost="worker:8080" name="erp-to-woo-commerce-inventory-mapper" pipes:sdkHostName="worker" pipes:appName="">
             <bpmn:incoming>Flow_11j113s</bpmn:incoming>
             <bpmn:outgoing>Flow_0newzly</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_11j113s" sourceRef="Activity_1263zgj" targetRef="Activity_1cqa8rn"/>
-        <bpmn:task id="Activity_0s1103o" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-by-sku-cache" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_0s1103o" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-by-sku-cache-sync-inventory" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_0newzly</bpmn:incoming>
             <bpmn:outgoing>Flow_0x4orcz</bpmn:outgoing>
         </bpmn:task>
