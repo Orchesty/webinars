@@ -1,5 +1,4 @@
 import { AbstractRepository } from '@orchesty/nodejs-sdk/dist/lib/Storage/Mongo';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { IndexDescription } from 'mongodb';
 import StoredCategoryProductRelationEntity from './StoredCategoryProductRelationEntity';
 
