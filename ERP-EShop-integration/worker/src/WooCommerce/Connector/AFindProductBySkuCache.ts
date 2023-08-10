@@ -20,12 +20,15 @@ export default abstract class AFindProductBySkuCache extends AConnector {
         );
 
         const foundId = await this.cacheService.entry<string>(
-            sku ?? '',
+            `product_${sku ?? ''}`,
             req,
-            (responseDto): ICacheCallback<string> => ({
-                expire: 3600 * 24,
-                dataToStore: (responseDto.getJsonBody() as IOutput[])[0]?.id?.toString() ?? '',
-            }),
+            (responseDto): ICacheCallback<string> => {
+                const id = (responseDto.getJsonBody() as IOutput[])[0]?.id?.toString();
+                return {
+                    expire: id ? 60 * 10 : 0,
+                    dataToStore: id ?? '',
+                };
+            },
             { success: 200 },
         );
 

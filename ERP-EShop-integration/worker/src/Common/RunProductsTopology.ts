@@ -21,14 +21,12 @@ export default class RunProductsTopology extends RunTopologyBase {
 
         let foundCategory;
         if (categoryId !== undefined) {
-            const query = {
-                categoryId,
-            };
-
-            foundCategory = await this.storedCategoryProductRelationRepository.findOne(query);
+            foundCategory = await this.storedCategoryProductRelationRepository.findOne({ categoryId });
 
             if (foundCategory) {
-                await this.storedCategoryProductRelationRepository.delete(query);
+                await this.storedCategoryProductRelationRepository.delete({
+                    id: foundCategory.id,
+                });
                 dto.setNewJsonData({ ids: [foundCategory.productId] });
 
                 return await super.processAction(dto) as unknown as ProcessDto<IOutput>;

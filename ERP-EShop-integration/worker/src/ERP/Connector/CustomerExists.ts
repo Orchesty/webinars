@@ -17,12 +17,17 @@ export default class CustomerExists extends ASqlConnector {
     protected getQuery(processDto: ProcessDto<IInput>): Promise<string> | string {
         const { customer } = processDto.getJsonData();
 
-        return String(`SELECT COUNT(*) AS count FROM \`customers\` WHERE EMAIL = '${customer.email}'`);
+        return String(`SELECT CUSTOMERID AS customerId FROM \`customers\` WHERE EMAIL = '${customer.email}'`);
     }
 
-    protected processResult(res: { rows: { count: number }[] }, dto: ProcessDto<IInput>): ProcessDto {
-        if (res.rows[0].count) {
+    protected processResult(
+        res: { rows: { customerId: number }[] },
+        dto: ProcessDto<IInput>,
+    ): ProcessDto {
+        const customerId = res.rows.length > 0 ? res.rows[0].customerId : undefined;
+        if (customerId !== undefined && customerId !== null) {
             const { order, orderLines } = dto.getJsonData();
+            order.customerId = customerId;
 
             dto.setNewJsonData({ order, orderLines });
             dto.setForceFollowers(OrderExists);

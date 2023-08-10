@@ -32,11 +32,12 @@ export default class ListAllProducts extends ASqlBatchConnector {
                               c.CATEGORYNAME   as slug,
                               c.CATEGORY       as categoryId
                        FROM \`products\` p LEFT JOIN \`categories\` c
-                       ON p.CATEGORY = c.CATEGORY
-                       WHERE p.CREATED > '${lastRun}'`;
+                       ON p.CATEGORY = c.CATEGORY`;
 
         if (ids) {
-            baseQuery += ` AND p.PROD_ID IN (${ids})`;
+            baseQuery += ` WHERE p.PROD_ID IN (${ids})`;
+        } else {
+            baseQuery += ` WHERE p.CREATED > '${lastRun}'`;
         }
 
         baseQuery += ` LIMIT ${LIMIT} OFFSET ${offset}`;

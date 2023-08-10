@@ -11,7 +11,8 @@ export default class FindProductCategoryCacheSyncProducts extends AFindProductCa
         return NAME;
     }
 
-    protected processFoundSlug(foundSlug: string, dto: ProcessDto): void {
+    // eslint-disable-next-line @typescript-eslint/require-await
+    protected async processFoundSlug(foundSlug: string, dto: ProcessDto): Promise<void> {
         if (foundSlug) {
             dto.setForceFollowers(FIND_PRODUCT_BY_SKU_CACHE_SYNC_PRODUCTS);
 

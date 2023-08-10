@@ -22,24 +22,24 @@ export default abstract class AFindProductCategoryCache extends AConnector {
         );
 
         const foundSlug = await this.cacheService.entry<string>(
-            slug ?? '',
+            `category_ ${slug ?? ''}`,
             req,
             (responseDto): ICacheCallback<string> => {
                 const { slug: requestedSlug } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
                 return {
-                    expire: 3600 * 24,
+                    expire: requestedSlug ? 60 * 10 : 0,
                     dataToStore: requestedSlug ?? '',
                 };
             },
             { success: 200 },
         );
 
-        this.processFoundSlug(foundSlug, dto);
+        await this.processFoundSlug(foundSlug, dto);
 
         return dto;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected processFoundSlug(foundSlug: string, dto: ProcessDto): void {}
+    protected async processFoundSlug(foundSlug: string, dto: ProcessDto): Promise<void> {}
 
 }

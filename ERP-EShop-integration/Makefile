@@ -1,7 +1,9 @@
 DC=docker-compose
 DR=docker-compose exec -T rabbitmq
 DB=docker-compose exec -T backend
+DCM=docker-compose exec -T db
 WORKER=docker-compose exec -T worker
+DW=docker-compose exec -T wordpress
 
 ALIAS?=alias
 Darwin:
@@ -37,9 +39,16 @@ docker-up-force: .env .lo0-up
 docker-down-clean: .env .lo0-down
 	$(DC) down -v
 
+database-initialize:
+	$(DCM) mysql -uroot -proot < ./ERP/init.sql;
+	$(DCM) mysql -uroot -proot < ./WooCommerce/init.sql;
+
 docker-stop: .env .lo0-down
 	$(DC) down
 
 # Pnpm section
 pnpm-install:
 	$(WORKER) pnpm install
+
+plugin-initialize:
+	$(DW) curl -u "root:H8Re ZPFO Pv5s 2JxM 50Ea r3Ze" -X POST  http://127.0.0.10//wp-json/wp/v2/plugins?slug=woocommerce&status=active

@@ -21,7 +21,7 @@ services:
             WORKER_API_HOST: ${WORKER_API_HOST}
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
             REDIS_DSN: redis://redis
-            MONGODB_DSN: 'mongodb://127.0.0.10:27017/webinars'
+            MONGODB_DSN: 'mongodb://mongo/webinars'
         command: sh -c 'pnpm run start'
         mem_limit: 512MB
         depends_on:
@@ -125,7 +125,7 @@ services:
             FRONTEND_URL: '/'
             STARTINGPOINT_URL: http://${DEV_IP}:82
         ports:
-            - ${DEV_IP}:80:80
+            - ${DEV_IP}:85:80
         mem_limit: 32MB
 
     backend:
@@ -179,7 +179,7 @@ services:
     wordpress:
         image: wordpress:php8.2
         ports:
-            - ${DEV_IP}:8088:80
+            - ${DEV_IP}:80:80
         volumes:
             - ./WooCommerce/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:cached
         environment:
