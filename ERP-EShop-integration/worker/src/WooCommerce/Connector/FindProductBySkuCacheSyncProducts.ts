@@ -14,16 +14,18 @@ export default class FindProductBySkuCacheSyncProducts extends AFindProductBySku
     }
 
     protected processFoundId(foundId: string, dto: ProcessDto<IInput>): void {
-        const { name, price, date_created, sku } = dto.getJsonData();
+        const { name, regular_price, date_created, sku } = dto.getJsonData();
 
+        /* eslint-disable @typescript-eslint/naming-convention */
         dto.setNewJsonData<IOutput>({
             name,
-            price,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
+            regular_price,
             date_created,
             sku,
             id: Number(foundId),
         });
+        /* eslint-enable @typescript-eslint/naming-convention */
+
         if (!foundId) {
             dto.setForceFollowers(WOOCOMMERCE_CREATE_PRODUCT);
         } else {

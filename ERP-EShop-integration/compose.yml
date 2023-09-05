@@ -1,28 +1,17 @@
 version: '2.4'
 
 services:
-    wait-for-it:
-        image: hanabosocom/wait-for-it:master
-
     worker:
-        image: worker:tag
-        build: worker/docker
-        user: ${DEV_UID}:${DEV_GID}
-        working_dir: /var/www
-        volumes:
-            - ./worker/:/var/www:cached
+        image: ${WORKER_IMAGE}
         environment:
-            # Envs for tests are load from nodejs-sdk/.jest/testEnvs.js
-            JEST_DOCKER: 1
             APP_ENV: debug
             CRYPT_SECRET: ${CRYPT_SECRET}
             BACKEND_URL: ${BACKEND_URL}
-            STARTING_POINT_DSN: ${STARTING_POINT_DSN}
+            STARTING_POINT_URL: ${STARTING_POINT_URL}
             WORKER_API_HOST: ${WORKER_API_HOST}
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
             REDIS_DSN: redis://redis
             MONGODB_DSN: ${MONGO_DSN}
-        command: sh -c 'pnpm run start'
         mem_limit: 512MB
         depends_on:
             - fluentd
@@ -201,11 +190,6 @@ services:
             - ${DEV_IP}:3306:3306
         volumes:
             - mysql:/var/lib/mysql
-
-    adminer:
-        image: adminer
-        ports:
-            - ${DEV_IP}:8888:8080
 
     redis:
         image: redis:alpine

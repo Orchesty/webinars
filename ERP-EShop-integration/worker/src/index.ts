@@ -3,9 +3,6 @@ import MySqlApplication from '@orchesty/nodejs-connectors/dist/lib/Sql/MySqlAppl
 import WooCommerceGetOrders from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetOrders';
 import WooCommerceCreateProduct
     from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProduct';
-import WooCommerceCreateProductCategory
-    from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProductCategory';
-import WooCommerceApplication from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/WooCommerceApplication';
 import { container, initiateContainer } from '@orchesty/nodejs-sdk';
 import CacheService from '@orchesty/nodejs-sdk/dist/lib/Cache/CacheService';
 import { ICommonNode } from '@orchesty/nodejs-sdk/dist/lib/Commons/ICommonNode';
@@ -31,10 +28,12 @@ import FindProductBySkuCacheSyncInventory from './WooCommerce/Connector/FindProd
 import FindProductBySkuCacheSyncProducts from './WooCommerce/Connector/FindProductBySkuCacheSyncProducts';
 import FindProductCategoryCacheSyncCategories from './WooCommerce/Connector/FindProductCategoryCacheSyncCategories';
 import FindProductCategoryCacheSyncProducts from './WooCommerce/Connector/FindProductCategoryCacheSyncProducts';
+import WooCommerceCreateProductCategory from './WooCommerce/Connector/WooCommerceCreateProductCategory';
 import WooCommerceUpdateProduct from './WooCommerce/Connector/WooCommerceUpdateProduct';
 import ERPToWooCommerceCategoryMapper from './WooCommerce/CustomNode/ERPToWooCommerceCategoryMapper';
 import ERPToWooCommerceInventoryMapper from './WooCommerce/CustomNode/ERPToWooCommerceInventoryMapper';
 import ERPToWooCommerceProductMapper from './WooCommerce/CustomNode/ERPToWooCommerceProductMapper';
+import WooCommerceApplication from './WooCommerce/WooCommerceApplication';
 
 function initializeERP(storedCategoryProductRelationRepository: StoredCategoryProductRelationRepository): void {
     const mySqlApplication = new MySqlApplication();
@@ -106,7 +105,10 @@ function initializeWooCommerce(
     container.setNode(new RunTopology(topologyRunner, 'category-synchronization', 'cron'));
     container.setNode(new WooCommerceCreateProductCategory(), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceCategoryMapper());
-    container.setNode(new FindProductCategoryCacheSyncCategories(cacheService), wooCommerceApplication);
+    container.setNode(new FindProductCategoryCacheSyncCategories(
+        storedCategoryProductRelationRepository,
+        cacheService,
+    ), wooCommerceApplication);
     container.setNode(new FindProductCategoryCacheSyncProducts(cacheService), wooCommerceApplication);
     container.setNode(new ERPToWooCommerceInventoryMapper());
     container.setNode(new FindProductBySkuCacheSyncInventory(cacheService), wooCommerceApplication);
@@ -117,7 +119,7 @@ function initializeWooCommerce(
     container.setNode(new ERPToWooCommerceProductMapper());
 }
 
-export default function prepare(): void {
+export default async function prepare(): Promise<void> {
     // Load core services by:
     initiateContainer();
 
@@ -127,6 +129,7 @@ export default function prepare(): void {
     const cacheService = new CacheService(redisService, curlService);
     container.set(cacheService);
     const mongoDb = new MongoDb(mongodb.dsn);
+    await mongoDb.connect();
     container.set(mongoDb);
     const repository = new StoredCategoryProductRelationRepository(mongoDb, 'StoredCategoryProductRelationEntity');
     container.set(repository);

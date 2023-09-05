@@ -1,7 +1,13 @@
-DC=docker-compose
-DR=docker-compose exec -T rabbitmq
-DB=docker-compose exec -T backend
-WORKER=docker-compose exec -T worker
+COMPOSE_FILE=docker-compose.yml
+WP_DOMAIN=http://127.0.0.10
+
+
+DC=docker-compose -f $(COMPOSE_FILE)
+DR=$(DC) exec -T rabbitmq
+DB=$(DC) exec -T backend
+DCM=$(DC) exec -T db
+WORKER=$(DC) exec -T worker
+DW=$(DC) exec -T wordpress
 
 ALIAS?=alias
 Darwin:
@@ -37,9 +43,27 @@ docker-up-force: .env .lo0-up
 docker-down-clean: .env .lo0-down
 	$(DC) down -v
 
+database-initialize:
+	$(DCM) mysql -uroot -proot < ./ERP/init.sql;
+	$(DCM) mysql -uroot -proot < ./WooCommerce/init.sql;
+
 docker-stop: .env .lo0-down
 	$(DC) down
 
 # Pnpm section
 pnpm-install:
 	$(WORKER) pnpm install
+
+plugin-initialize:
+	$(DW) apt update
+	$(DW) apt install less -y
+	$(DW) curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	$(DW) php wp-cli.phar --allow-root core update
+	$(DW) php wp-cli.phar --allow-root core update-db
+	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
+	$(DW) php wp-cli.phar --allow-root theme install storefront --activate
+
+wp-replace-domain:
+	sed -i "s/"http://127.0.0.10"/$(WP_DOMAIN)/g" ./WooCommerce/init.sql
+
+fresh-init: docker-down-clean init-dev wp-replace-domain database-initialize plugin-initialize

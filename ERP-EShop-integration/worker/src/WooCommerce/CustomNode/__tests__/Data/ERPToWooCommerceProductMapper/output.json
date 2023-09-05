@@ -7,7 +7,7 @@
         "date_created": "2015-04-03T14:00:45.000Z",
         "id": 1,
         "name": "ACADEMY ACADEMY",
-        "price": "25.99",
+        "regular_price": "25.99",
         "sku": "1976",
         "slug": "sci-fi"
     }

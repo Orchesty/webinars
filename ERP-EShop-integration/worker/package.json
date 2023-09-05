@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "main": "server.js",
   "scripts": {
-    "test": "jest --coverage --detectOpenHandles --passWithNoTests",
+    "test": "jest --coverage --detectOpenHandles --passWithNoTests --run-in-band",
     "lint": "eslint src --ext .ts --fix",
     "start": "nodemon src/server.ts",
     "build": "rm -rf build && tsc -p tsconfig.prod.json"

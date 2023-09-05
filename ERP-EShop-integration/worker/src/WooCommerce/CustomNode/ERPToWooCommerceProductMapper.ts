@@ -18,7 +18,7 @@ export default class ERPToWooCommerceProductMapper extends ACommonNode {
         return dto.setNewJsonData({
             id,
             name,
-            price,
+            regular_price: price,
             date_created,
             slug: slugify(slug).toLowerCase(),
             categoryId,

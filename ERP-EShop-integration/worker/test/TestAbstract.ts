@@ -10,15 +10,17 @@ import p from '../src';
 /* eslint-disable import/no-mutable-exports */
 export let container: DIContainer;
 export let dm: DatabaseClient;
+export let db: MongoDb;
 export let sender: CurlSender;
 export let redis: Redis;
 
 /* eslint-enable import/no-mutable-exports */
 
-export function prepare(): void {
-    p();
+export async function prepare(): Promise<void> {
+    await p();
     container = c;
     dm = c.get(DatabaseClient);
+    db = c.get(MongoDb);
     sender = c.get(CurlSender);
     redis = c.get(Redis);
 }
@@ -36,5 +38,5 @@ export async function dropCollection<T extends ADocument>(collection: ClassType<
 
 export async function closeConnections(): Promise<void> {
     await redis.close();
-    await container.get(MongoDb).disconnect();
+    await db.disconnect();
 }
