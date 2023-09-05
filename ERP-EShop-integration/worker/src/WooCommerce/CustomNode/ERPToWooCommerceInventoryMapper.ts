@@ -1,4 +1,3 @@
-import { IOutput } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetProducts';
 import ACommonNode from '@orchesty/nodejs-sdk/dist/lib/Commons/ACommonNode';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
 import ResultCode from '@orchesty/nodejs-sdk/dist/lib/Utils/ResultCode';
@@ -12,7 +11,7 @@ export default class ERPToWooCommerceInventoryMapper extends ACommonNode {
         return NAME;
     }
 
-    public processAction(dto: ProcessDto<IInput>): ProcessDto<IInput | IOutput> {
+    public processAction(dto: ProcessDto<IInput>): ProcessDto<IInput> {
         const { stockQuantity, sales, sku } = dto.getJsonData();
 
         if (!sku) {
@@ -22,7 +21,7 @@ export default class ERPToWooCommerceInventoryMapper extends ACommonNode {
         }
 
         /* eslint-disable @typescript-eslint/naming-convention */
-        return dto.setNewJsonData({
+        return dto.setJsonData({
             sku: String(sku),
             stock_quantity: stockQuantity,
             total_sales: sales,

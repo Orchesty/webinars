@@ -2,6 +2,7 @@ import { container as c } from '@orchesty/nodejs-sdk';
 import DIContainer from '@orchesty/nodejs-sdk/dist/lib/DIContainer/Container';
 import ADocument, { ClassType } from '@orchesty/nodejs-sdk/dist/lib/Storage/Database/ADocument';
 import DatabaseClient from '@orchesty/nodejs-sdk/dist/lib/Storage/Database/Client';
+import { MongoDb } from '@orchesty/nodejs-sdk/dist/lib/Storage/Mongo';
 import Redis from '@orchesty/nodejs-sdk/dist/lib/Storage/Redis/Redis';
 import CurlSender from '@orchesty/nodejs-sdk/dist/lib/Transport/Curl/CurlSender';
 import p from '../src';
@@ -35,4 +36,5 @@ export async function dropCollection<T extends ADocument>(collection: ClassType<
 
 export async function closeConnections(): Promise<void> {
     await redis.close();
+    await container.get(MongoDb).disconnect();
 }
