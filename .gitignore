@@ -10,5 +10,6 @@ node_modules
 
 # ORCHESTY
 .env
+exampleApp.json
 ERP-EShop-integration/topology/*
 !ERP-EShop-integration/topology/.gitkeep

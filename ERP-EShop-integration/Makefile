@@ -1,17 +1,19 @@
 COMPOSE_FILE=docker-compose.yml
 WP_DOMAIN=http://127.0.0.10
-
+WP_PASSWORD=\$$P\$$B25z1NmiRUHkh20JwF1\.Juui7uhWMH0
+WP_API_KEY=\$$P\$$Bew81V41ohjMbPAt/TjthEQrPy/1aA0
 
 DC=docker-compose -f $(COMPOSE_FILE)
 DR=$(DC) exec -T rabbitmq
 DB=$(DC) exec -T backend
 DCM=$(DC) exec -T db
+DCG=$(DC) exec -T mongo
 WORKER=$(DC) exec -T worker
 DW=$(DC) exec -T wordpress
 
 ALIAS?=alias
 Darwin:
-	sudo ifconfig lo0 $(ALIAS) $(shell awk '$$1 ~ /^DEV_IP/' .env.dist | sed -e "s/^DEV_IP=//")
+	sudo ifconfig lo0 $(ALIAS) $(shell awk '$$1 ~ /^DEV_IP/' .env.dist | sed -e "s/^DEV_IP=//") || true
 Linux:
 	@echo 'skipping ...'
 .lo0-up:
@@ -39,8 +41,10 @@ docker-up-force: .env .lo0-up
 	$(DB) bin/console mongodb:index:update
 	$(DB) bin/console service:install worker worker:8080
 	$(DB) bin/console api-token:create --key "$(shell grep 'ORCHESTY_API_KEY' .env | cut -d "=" -f2)"
+	$(DB) bin/console user:create "$(shell grep 'ORCHESTY_USER' .env | cut -d "=" -f2)" "$(shell grep 'ORCHESTY_PASSWORD' .env | cut -d "=" -f2)"
 
 docker-down-clean: .env .lo0-down
+	docker ps -aq --filter "name=.*topology.*" | xargs docker rm -f
 	$(DC) down -v
 
 database-initialize:
@@ -63,7 +67,19 @@ plugin-initialize:
 	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
 	$(DW) php wp-cli.phar --allow-root theme install storefront --activate
 
-wp-replace-domain:
-	sed -i "s/"http://127.0.0.10"/$(WP_DOMAIN)/g" ./WooCommerce/init.sql
+wp-database-replace:
+	sed -i "s|http://127.0.0.10|$(WP_DOMAIN)|g" ./WooCommerce/init.sql
+	sed -i "s|"\$$P\$$B25z1NmiRUHkh20JwF1\.Juui7uhWMH0"|$(WP_PASSWORD)|g" ./WooCommerce/init.sql
+	sed -i "s|"\$$P\$$Bew81V41ohjMbPAt/TjthEQrPy/1aA0"|$(WP_API_KEY)|g" ./WooCommerce/init.sql
 
-fresh-init: docker-down-clean init-dev wp-replace-domain database-initialize plugin-initialize
+install-topology:
+	$(DB) bin/console topology:install -c -u --force worker:8080
+
+exampleApp.json:
+	cat exampleApp.dist.json > exampleApp.json
+
+import-mongo-data: exampleApp.json
+	$(DC) cp ./exampleApp.json mongo:/tmp
+	$(DCG) mongoimport --db "$(shell grep 'MAIN_DB' .env | cut -d "=" -f2)" --collection ApplicationInstall --file /tmp/exampleApp.json --jsonArray
+
+fresh-init: docker-down-clean init-dev wp-database-replace database-initialize plugin-initialize install-topology import-mongo-data

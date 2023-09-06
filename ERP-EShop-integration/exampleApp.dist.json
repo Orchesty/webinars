@@ -1,0 +1,22 @@
+[
+    {
+        "created": "2023-09-06T12:34:40.000Z",
+        "deleted": false,
+        "enabled": true,
+        "encryptedSettings": "002_PQFx3Ue4aOJGwBRatYNYd9B3Ep/bLaIsmX4YyewvPEw=:supw3ieR/xAcNJYKO6QwZHg/ymfyh05UDtg8QWWCSW4=:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:OVla9gQiQNGkKJtDPxe6WNp0xqyLTeorXRP7ytdpk+I5uBbCJZJKxjCo62wcG9bSxL8Vu3TIcrlCypgDi8Cn6PNNC9ChLnJe+l8Yahik9GV7/XipyfGcNKczGNYoIvPubXIMfUsYCII+VZvN6xn5Vi2O1pexzYfoTXxxMFq/cGplsrjj09M12TiLllypawRj0V8wG+Lj68OVJfxB3399Hy/vMnNBkGYDNg==",
+        "key": "mysql",
+        "nonEncryptedSettings": {},
+        "updated": "2023-09-06T12:37:06.000Z",
+        "user": "orchesty"
+    },
+    {
+        "created": "2023-09-06T12:35:00.000Z",
+        "deleted": false,
+        "enabled": true,
+        "encryptedSettings": "002_TvZtEIbvX/a8pSuDtKNe2ew2xcxvDrnPx1V8KbWayjU=:supw3ieR/xAcNJYKO6QwZHg/ymfyh05UDtg8QWWCSW4=:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:VIb8bwKRYnDgmM4GvHN2eNp0xqyLTeorXRP7ytdpk+I5uBbCJZJKxjCo62wcG9bSxLkVu3TIcrlC14QVjcCn6PNLC9C3Iz8Rq15fagLuuWdurDCtnLfCNK9zEtIzI6KcYRpLKGItPO8ldtfMohu5czq31Jnyst7yHT9KJgvzbCIwpLmynohgmCWJlE35MxIMmwkwRPCtu5fOdPEXkHx9Azq6OHNVwi8bOLVheNbf",
+        "key": "woocommerce",
+        "nonEncryptedSettings": {},
+        "updated": "2023-09-06T12:37:02.000Z",
+        "user": "orchesty"
+    }
+]

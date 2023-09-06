@@ -132,6 +132,8 @@ services:
         image: orchesty/backend:${VERSION}
         ports:
             - ${DEV_IP}:8080:80
+        volumes:
+            - ./worker/src/topology:/var/www/topology
         environment:
             BACKEND_URL: ${BACKEND_URL}/
             FRONTEND_URL: ${FRONTEND_URL}/

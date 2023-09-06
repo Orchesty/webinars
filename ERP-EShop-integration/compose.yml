@@ -1,6 +1,9 @@
 version: '2.4'
 
 services:
+    wait-for-it:
+        image: hanabosocom/wait-for-it:master
+
     worker:
         image: ${WORKER_IMAGE}
         environment:
@@ -38,7 +41,7 @@ services:
             RABBITMQ_DSN: ${RABBITMQ_DSN}
             RABBIT_DELIVERY_MODE: 2
         ports:
-            - ${DEV_IP}:82:8080
+            - ${DEV_IP}:11002:8080
         mem_limit: 64MB
         depends_on:
             - fluentd
@@ -114,13 +117,15 @@ services:
             FRONTEND_URL: '/'
             STARTINGPOINT_URL: ${STARTING_POINT_URL}
         ports:
-            - ${DEV_IP}:85:80
+            - ${DEV_IP}:11000:80
         mem_limit: 32MB
 
     backend:
         image: orchesty/backend:${VERSION}
         ports:
-            - ${DEV_IP}:8080:80
+            - ${DEV_IP}:11001:80
+        volumes:
+            - ./worker/src/topology:/var/www/topology
         environment:
             BACKEND_URL: ${BACKEND_URL}/
             FRONTEND_URL: ${FRONTEND_URL}/
@@ -130,7 +135,7 @@ services:
             METRICS_DSN: ${METRICS_DSN}
             METRICS_DB: metrics
             CRON_DSN: cron-api:8080
-            STARTING_POINT_URL: ${STARTING_POINT_DSN}
+            STARTING_POINT_URL: ${STARTING_POINT_URL}
             TOPOLOGY_API_DSN: topology-api:8080
             DOCKER_PF_BRIDGE_IMAGE: orchesty/bridge:${VERSION}
             JWT_KEY: ${JWT_KEY}
@@ -151,7 +156,7 @@ services:
     mongo:
         image: mongo
         ports:
-            - ${DEV_IP}:27017:27017
+            - ${DEV_IP}:11007:27017
         volumes:
             - mongodb:/data/db
         mem_limit: 256MB
@@ -159,7 +164,7 @@ services:
     rabbitmq:
         image: rabbitmq:3-management-alpine
         ports:
-            - ${DEV_IP}:15672:15672
+            - ${DEV_IP}:11008:15672
         volumes:
             - rabbitmq:/var/lib/rabbitmq
         mem_limit: 512MB
@@ -168,7 +173,7 @@ services:
     wordpress:
         image: wordpress:php8.2
         ports:
-            - ${DEV_IP}:80:80
+            - ${DEV_IP}:11005:80
         volumes:
             - ./WooCommerce/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:cached
         environment:
@@ -187,14 +192,14 @@ services:
             MYSQL_PASSWORD: wpuser
             MYSQL_ROOT_PASSWORD: root
         ports:
-            - ${DEV_IP}:3306:3306
+            - ${DEV_IP}:11006:3306
         volumes:
             - mysql:/var/lib/mysql
 
     redis:
         image: redis:alpine
         ports:
-            - ${DEV_IP}:6379:6379
+            - ${DEV_IP}:11009:6379
 
 volumes:
     mysql:
