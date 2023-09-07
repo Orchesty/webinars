@@ -39,12 +39,12 @@ docker-up-force: .env .lo0-up
 	$(DB) bin/console doctrine:mongodb:schema:update --dm default
 	$(DB) bin/console doctrine:mongodb:schema:update --dm metrics
 	$(DB) bin/console mongodb:index:update
-	$(DB) bin/console service:install worker worker:8080
+	$(DB) bin/console service:install worker worker:8000
 	$(DB) bin/console api-token:create --key "$(shell grep 'ORCHESTY_API_KEY' .env | cut -d "=" -f2)"
 	$(DB) bin/console user:create "$(shell grep 'ORCHESTY_USER' .env | cut -d "=" -f2)" "$(shell grep 'ORCHESTY_PASSWORD' .env | cut -d "=" -f2)"
 
 docker-down-clean: .env .lo0-down
-	docker ps -aq --filter "name=.*topology.*" | xargs docker rm -f
+	docker ps -aq --filter "name=.*topology.*" | xargs docker rm -f || true
 	$(DC) down -v
 
 database-initialize:
@@ -73,7 +73,7 @@ wp-database-replace:
 	sed -i "s|"\$$P\$$Bew81V41ohjMbPAt/TjthEQrPy/1aA0"|$(WP_API_KEY)|g" ./WooCommerce/init.sql
 
 install-topology:
-	$(DB) bin/console topology:install -c -u --force worker:8080
+	$(DB) bin/console topology:install -c -u --force worker:8000
 
 exampleApp.json:
 	cat exampleApp.dist.json > exampleApp.json
