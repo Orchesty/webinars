@@ -22,7 +22,7 @@ export default abstract class AFindProductCategoryCache extends AConnector {
         );
 
         const foundSlug = await this.cacheService.entry<string>(
-            `category_ ${slug ?? ''}`,
+            `category_${slug ?? ''}`,
             req,
             (responseDto): ICacheCallback<string> => {
                 const { slug: requestedSlug } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
