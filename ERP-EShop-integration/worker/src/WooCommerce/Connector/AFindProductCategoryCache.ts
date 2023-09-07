@@ -13,7 +13,7 @@ export default abstract class AFindProductCategoryCache extends AConnector {
     }
 
     public async processAction(dto: ProcessDto<IOutput>): Promise<ProcessDto<IOutput>> {
-        const { slug } = dto.getJsonData();
+        const { slug, ...rest } = dto.getJsonData();
         const req = await this.getApplication().getRequestDto(
             dto,
             await this.getApplicationInstallFromProcess(dto),
@@ -21,22 +21,26 @@ export default abstract class AFindProductCategoryCache extends AConnector {
             `wp-json/wc/v3/products/categories?slug=${slug}`,
         );
 
-        const foundSlug = await this.cacheService.entry<string>(
+        const foundCategory = await this.cacheService.entry<{ slug?: string; id?: number }>(
             `category_${slug ?? ''}`,
             req,
-            (responseDto): ICacheCallback<string> => {
-                const { slug: requestedSlug } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
+            (responseDto): ICacheCallback<{ slug?: string; id?: number }> => {
+                const { slug: requestedSlug, id } = (responseDto.getJsonBody() as IOutput[])[0] ?? '';
                 return {
                     expire: requestedSlug ? 60 * 10 : 0,
-                    dataToStore: requestedSlug ?? '',
+                    dataToStore: { slug: requestedSlug, id },
                 };
             },
             { success: 200 },
         );
 
-        await this.processFoundSlug(foundSlug, dto);
+        await this.processFoundSlug(foundCategory?.slug ?? '', dto);
 
-        return dto;
+        return dto.setNewJsonData({
+            ...rest,
+            slug,
+            categoryId: foundCategory.id,
+        });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
