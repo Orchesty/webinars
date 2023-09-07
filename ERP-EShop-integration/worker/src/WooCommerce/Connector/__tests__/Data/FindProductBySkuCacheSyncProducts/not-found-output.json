@@ -7,6 +7,11 @@
         "worker-followers": "[{\"id\":\"1\",\"name\":\"woo-commerce-create-product\"},{\"id\":\"2\",\"name\":\"woo-commerce-update-product\"}]"
     },
     "data": {
+        "categories": [
+            {
+                "id": 14
+            }
+        ],
         "date_created": "2015-04-03T14:00:45.000Z",
         "id": 0,
         "name": "ACADEMY ACADEMY",

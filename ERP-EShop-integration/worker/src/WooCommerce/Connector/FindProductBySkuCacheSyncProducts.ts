@@ -14,7 +14,7 @@ export default class FindProductBySkuCacheSyncProducts extends AFindProductBySku
     }
 
     protected processFoundId(foundId: string, dto: ProcessDto<IInput>): void {
-        const { name, regular_price, date_created, sku } = dto.getJsonData();
+        const { name, regular_price, date_created, sku, categoryId } = dto.getJsonData();
 
         /* eslint-disable @typescript-eslint/naming-convention */
         dto.setNewJsonData<IOutput>({
@@ -22,6 +22,11 @@ export default class FindProductBySkuCacheSyncProducts extends AFindProductBySku
             regular_price,
             date_created,
             sku,
+            categories: [
+                {
+                    id: categoryId,
+                },
+            ],
             id: Number(foundId),
         });
         /* eslint-enable @typescript-eslint/naming-convention */

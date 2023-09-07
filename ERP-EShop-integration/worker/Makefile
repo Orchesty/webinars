@@ -53,7 +53,7 @@ localtest:
 
 fasttest: lint unit
 
-test: docker-up-force install fasttest docker-down-clean
+test: docker-up-force install database-initialize fasttest docker-down-clean
 
 database-initialize:
 	$(DCM) mysql -uroot -proot < ../ERP/init.sql;

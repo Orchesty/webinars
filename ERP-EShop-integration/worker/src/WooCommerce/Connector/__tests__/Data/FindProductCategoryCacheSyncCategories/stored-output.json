@@ -3,6 +3,7 @@
         "user": "TestUser"
     },
     "data": {
+        "categoryId": 9,
         "menu_order": 1,
         "name": "Action",
         "slug": "action"
