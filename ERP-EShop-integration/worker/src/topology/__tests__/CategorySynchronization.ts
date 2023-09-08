@@ -39,7 +39,7 @@ describe('Tests for CategorySynchronization topology', () => {
         assert.deepEqual(result.length, 16);
         /* eslint-disable @typescript-eslint/naming-convention */
         assert.deepEqual(result[0].getJsonData(), { ids: ['1'] });
-        assert.deepEqual(result[1].getJsonData(), { menu_order: 2, name: 'Animation', slug: 'animation' });
+        assert.deepEqual(result[1].getJsonData(), { menu_order: 2, categoryId: 2, name: 'Animation', slug: 'animation' });
         /* eslint-enable @typescript-eslint/naming-convention */
     });
 });

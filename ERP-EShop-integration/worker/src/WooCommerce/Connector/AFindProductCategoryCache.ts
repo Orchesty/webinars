@@ -5,6 +5,7 @@ import CacheService, { ICacheCallback } from '@orchesty/nodejs-sdk/dist/lib/Cach
 import AConnector from '@orchesty/nodejs-sdk/dist/lib/Connector/AConnector';
 import { HttpMethods } from '@orchesty/nodejs-sdk/dist/lib/Transport/HttpMethods';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
+import { IInput } from '../CustomNode/ERPToWooCommerceProductMapper';
 
 export default abstract class AFindProductCategoryCache extends AConnector {
 
@@ -12,8 +13,8 @@ export default abstract class AFindProductCategoryCache extends AConnector {
         super();
     }
 
-    public async processAction(dto: ProcessDto<IOutput>): Promise<ProcessDto<IOutput>> {
-        const { slug, ...rest } = dto.getJsonData();
+    public async processAction(dto: ProcessDto<IInput>): Promise<ProcessDto<IOutput>> {
+        const { slug, categoryId, ...rest } = dto.getJsonData();
         const req = await this.getApplication().getRequestDto(
             dto,
             await this.getApplicationInstallFromProcess(dto),
@@ -39,7 +40,7 @@ export default abstract class AFindProductCategoryCache extends AConnector {
         return dto.setNewJsonData({
             ...rest,
             slug,
-            categoryId: foundCategory.id,
+            categoryId: foundCategory.id ?? categoryId,
         });
     }
 
