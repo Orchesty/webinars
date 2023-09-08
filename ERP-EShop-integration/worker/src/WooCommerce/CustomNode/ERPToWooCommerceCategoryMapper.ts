@@ -22,6 +22,7 @@ export default class ERPToWooCommerceCategoryMapper extends ACommonNode {
             name: categoryName,
             menu_order: category,
             slug: slugify(categoryName).toLowerCase(),
+            categoryId: category,
         });
         /* eslint-enable @typescript-eslint/naming-convention */
     }
