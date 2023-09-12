@@ -45,6 +45,8 @@ docker-up-force: .env .lo0-up
 
 docker-down-clean: .env .lo0-down
 	docker ps -aq --filter "name=.*topology.*" | xargs docker rm -f || true
+	rm -rf ./topology/*
+	touch ./topology/.gitkeep
 	$(DC) down -v
 
 database-initialize:
@@ -65,6 +67,7 @@ plugin-initialize:
 	$(DW) php wp-cli.phar --allow-root core update
 	$(DW) php wp-cli.phar --allow-root core update-db
 	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
+	$(DW) php wp-cli.phar --allow-root plugin install wp-rest-cache --activate
 	$(DW) php wp-cli.phar --allow-root theme install storefront --activate
 
 wp-database-replace:

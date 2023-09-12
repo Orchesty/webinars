@@ -13,11 +13,11 @@
             <bpmn:outgoing>Flow_1cv72tz</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_057uyuj" sourceRef="Activity_1b94jjx" targetRef="Activity_0fg3kk1"/>
-        <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_1ksfd5f" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="woo-commerce-create-product-category" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_0wfe5h7</bpmn:incoming>
             <bpmn:outgoing>Flow_0babfof</bpmn:outgoing>
         </bpmn:task>
-        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-category-cache-sync-categories" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_049yes7" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="find-product-category-cache-sync-categories" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_1cv72tz</bpmn:incoming>
             <bpmn:outgoing>Flow_0wfe5h7</bpmn:outgoing>
         </bpmn:task>

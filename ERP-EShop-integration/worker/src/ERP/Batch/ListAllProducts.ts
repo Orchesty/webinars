@@ -38,17 +38,19 @@ export default class ListAllProducts extends ASqlBatchConnector {
             baseQuery += ` WHERE p.PROD_ID IN (${ids})`;
         } else {
             baseQuery += ` WHERE p.CREATED > '${lastRun}'`;
+            baseQuery += ` LIMIT ${LIMIT} OFFSET ${offset}`;
         }
-
-        baseQuery += ` LIMIT ${LIMIT} OFFSET ${offset}`;
 
         return String(baseQuery);
     }
 
-    protected async processResult(res: IInput, dto: BatchProcessDto): Promise<BatchProcessDto> {
+    protected async processResult(res: IInput, dto: BatchProcessDto<IRunTopologyInput>): Promise<BatchProcessDto> {
         dto.setItemList(res.rows);
-        const appInstall = await this.getApplicationInstallFromProcess(dto);
+        if (dto.getJsonData()?.ids) {
+            return dto;
+        }
 
+        const appInstall = await this.getApplicationInstallFromProcess(dto);
         if (res.rows.length < LIMIT) {
             appInstall.addNonEncryptedSettings({ [LAST_RUN_KEY]: new Date() });
             await this.getDbClient().getApplicationRepository().update(appInstall);

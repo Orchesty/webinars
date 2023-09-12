@@ -13,7 +13,7 @@
             <bpmn:outgoing>Flow_0n97lag</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_0w0g3hm" sourceRef="Activity_1lutt07" targetRef="Activity_0bby0cb"/>
-        <bpmn:task id="Activity_0ddrw9c" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-category-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_0ddrw9c" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="find-product-category-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_0n97lag</bpmn:incoming>
             <bpmn:outgoing>Flow_0mwhrtq</bpmn:outgoing>
             <bpmn:outgoing>Flow_1bi695d</bpmn:outgoing>
@@ -28,17 +28,17 @@
             <bpmn:incoming>Flow_0fcz7jr</bpmn:incoming>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_0fcz7jr" sourceRef="Activity_0zpnhxz" targetRef="Activity_0ewv7m3"/>
-        <bpmn:task id="Activity_1owk8gw" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="find-product-by-sku-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_1owk8gw" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="find-product-by-sku-cache-sync-products" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_1bi695d</bpmn:incoming>
             <bpmn:outgoing>Flow_02jhp5t</bpmn:outgoing>
             <bpmn:outgoing>Flow_0nzfiqj</bpmn:outgoing>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_1bi695d" sourceRef="Activity_0ddrw9c" targetRef="Activity_1owk8gw"/>
-        <bpmn:task id="Activity_15e35qz" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-update-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_15e35qz" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="woo-commerce-update-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_02jhp5t</bpmn:incoming>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_02jhp5t" sourceRef="Activity_1owk8gw" targetRef="Activity_15e35qz"/>
-        <bpmn:task id="Activity_0out4if" pipes:pipesType="connector" pipes:sdkHost="worker:8080" name="woo-commerce-create-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
+        <bpmn:task id="Activity_0out4if" pipes:pipesType="connector" pipes:sdkHost="worker:8080" pipes:rabbitPrefetch="50" name="woo-commerce-create-product" pipes:sdkHostName="worker" pipes:appName="woocommerce">
             <bpmn:incoming>Flow_0nzfiqj</bpmn:incoming>
         </bpmn:task>
         <bpmn:sequenceFlow id="Flow_0nzfiqj" sourceRef="Activity_1owk8gw" targetRef="Activity_0out4if"/>
