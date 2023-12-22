@@ -11,7 +11,7 @@ export default class ERPToWooCommerceProductMapper extends ACommonNode {
         return NAME;
     }
 
-    public processAction(dto: ProcessDto<IInput>): ProcessDto<IInput> {
+    public processAction(dto: ProcessDto<IInput>): ProcessDto {
         const { id, name, price, date_created, sku, slug, categoryId } = dto.getJsonData();
 
         /* eslint-disable @typescript-eslint/naming-convention */

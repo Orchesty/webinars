@@ -1,5 +1,5 @@
 {
-  "http": "POST http://127.0.0.42:8080/topologies/product-synchronization/nodes/cron/user/TestUser/run-by-name",
+  "http": "POST http://127.0.0.1:8080/topologies/product-synchronization/nodes/cron/user/TestUser/run-by-name",
   "code": 200,
   "body": {}
 }

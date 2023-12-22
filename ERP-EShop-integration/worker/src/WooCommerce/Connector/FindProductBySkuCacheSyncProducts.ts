@@ -1,4 +1,3 @@
-import { IOutput } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Batch/WooCommerceGetProducts';
 import { NAME as WOOCOMMERCE_CREATE_PRODUCT } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceCreateProduct';
 import { NAME as WOOCOMMERCE_UPDATE_PRODUCT } from '@orchesty/nodejs-connectors/dist/lib/WooCommerce/Connector/WooCommerceUpdateProduct';
 import ProcessDto from '@orchesty/nodejs-sdk/dist/lib/Utils/ProcessDto';
@@ -17,7 +16,7 @@ export default class FindProductBySkuCacheSyncProducts extends AFindProductBySku
         const { name, regular_price, date_created, sku, categoryId } = dto.getJsonData();
 
         /* eslint-disable @typescript-eslint/naming-convention */
-        dto.setNewJsonData<IOutput>({
+        dto.setNewJsonData<unknown>({
             name,
             regular_price,
             date_created,
