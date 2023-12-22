@@ -69,6 +69,7 @@ plugin-initialize:
 	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
 	$(DW) php wp-cli.phar --allow-root plugin install wp-rest-cache --activate
 	$(DW) php wp-cli.phar --allow-root theme install storefront --activate
+	$(DW) php wp-cli.phar --allow-root wc update
 
 wp-database-replace:
 	sed -i "s|http://127.0.0.10|$(WP_DOMAIN)|g" ./WooCommerce/init.sql
