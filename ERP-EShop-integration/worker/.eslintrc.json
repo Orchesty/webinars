@@ -1,5 +1,8 @@
 {
     "extends": [
         "plugin:@hanaboso/orchesty"
-    ]
+    ],
+    "rules": {
+        "semi": "off"
+    }
 }
