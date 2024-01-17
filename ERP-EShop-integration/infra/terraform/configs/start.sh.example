@@ -1,0 +1,1 @@
+time make fresh-init COMPOSE_FILE=compose.yml WP_DOMAIN=https://example.com WP_PASSWORD="pass" WP_API_KEY="key"

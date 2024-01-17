@@ -18,7 +18,7 @@ Linux:
 
 # Build
 build: .env
-	docker build -f Dockerfile -t $(IMAGE) --pull .
+	docker buildx build --platform=linux/amd64 -f Dockerfile -t $(IMAGE) --pull .
 	docker push $(IMAGE)
 
 docker-compose.ci.yml:

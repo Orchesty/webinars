@@ -1,0 +1,5 @@
+.terraform
+secrets.tfvars
+
+configs/.env
+configs/start.sh

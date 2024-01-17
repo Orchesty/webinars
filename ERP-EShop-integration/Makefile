@@ -83,7 +83,7 @@ exampleApp.json:
 	cat exampleApp.dist.json > exampleApp.json
 
 import-mongo-data: exampleApp.json
-	$(DC) cp ./exampleApp.json mongo:/tmp
+	docker cp ./exampleApp.json erp-eshop-integration_mongo_1:/tmp
 	$(DCG) mongoimport --db "$(shell grep 'MAIN_DB' .env | cut -d "=" -f2)" --collection ApplicationInstall --file /tmp/exampleApp.json --jsonArray
 
 fresh-init: docker-down-clean init-dev wp-database-replace database-initialize plugin-initialize install-topology import-mongo-data
