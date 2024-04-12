@@ -21,7 +21,7 @@ services:
         command: sleep infinity
 
     db:
-        image: mysql:5
+        image: mysql:8.2
         environment:
             MYSQL_DATABASE: wordpress
             MYSQL_USER: wpuser

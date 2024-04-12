@@ -195,7 +195,7 @@ services:
                 define('WP_DEBUG', false);
 
     db:
-        image: mysql:5
+        image: mysql:8.2
         command: "mysqld --innodb_adaptive_hash_index=false --innodb_flush_method=nosync --innodb_file_per_table=false"
         environment:
             MYSQL_DATABASE: wordpress

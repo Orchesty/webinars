@@ -8,7 +8,6 @@ import Form from '@orchesty/nodejs-sdk/dist/lib/Application/Model/Form/Form';
 import FormStack from '@orchesty/nodejs-sdk/dist/lib/Application/Model/Form/FormStack';
 import { PASSWORD, USER } from '@orchesty/nodejs-sdk/dist/lib/Authorization/Type/Basic/ABasicApplication';
 
-// TODO rich vyresit instalaci WooCommerce automaticky
 export default class WooCommerceApplication extends WooCommerceBaseApp {
 
     public getFormStack(): FormStack {

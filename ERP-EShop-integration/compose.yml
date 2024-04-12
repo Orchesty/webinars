@@ -10,7 +10,7 @@ services:
             APP_ENV: debug
             CRYPT_SECRET: ${CRYPT_SECRET}
             BACKEND_URL: ${BACKEND_URL}
-            STARTING_POINT_URL: ${STARTING_POINT_URL}
+            STARTING_POINT_URL: ${STARTING_POINT_DSN}
             WORKER_API_HOST: ${WORKER_API_HOST}
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
             REDIS_DSN: redis://redis
@@ -135,7 +135,7 @@ services:
             METRICS_DSN: ${METRICS_DSN}
             METRICS_DB: metrics
             CRON_DSN: cron-api:8080
-            STARTING_POINT_URL: ${STARTING_POINT_URL}
+            STARTING_POINT_URL: ${STARTING_POINT_DSN}
             TOPOLOGY_API_DSN: topology-api:8080
             DOCKER_PF_BRIDGE_IMAGE: orchesty/bridge:${VERSION}
             JWT_KEY: ${JWT_KEY}
@@ -171,11 +171,12 @@ services:
 
 
     wordpress:
-        image: wordpress:php8.2
+        image: wordpress:php8.3
         ports:
             - ${DEV_IP}:11005:80
         volumes:
             - ./WooCommerce/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:cached
+            - ./WooCommerce/apache2.conf:/etc/apache2/apache2.conf:cached
         environment:
             WORDPRESS_DB_HOST: db
             WORDPRESS_DB_USER: wpuser
@@ -183,9 +184,11 @@ services:
             WORDPRESS_DB_NAME: wordpress
             WORDPRESS_CONFIG_EXTRA: |
                 define('WP_ENVIRONMENT_TYPE', 'local');
+                define('WP_DEBUG', false);
 
     db:
-        image: mysql:5
+        image: mysql:8.2
+        command: "mysqld --innodb_adaptive_hash_index=false --innodb_flush_method=nosync --innodb_file_per_table=false"
         environment:
             MYSQL_DATABASE: wordpress
             MYSQL_USER: wpuser
@@ -195,6 +198,11 @@ services:
             - ${DEV_IP}:11006:3306
         volumes:
             - mysql:/var/lib/mysql
+
+    adminer:
+        image: adminer
+        ports:
+            - ${DEV_IP}:8888:8080
 
     redis:
         image: redis:alpine

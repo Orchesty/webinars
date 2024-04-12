@@ -36,14 +36,8 @@ export function appInstall(
     mockOnce(
         [
             ...extraQueries,
-            `filter={"names":["${name}"],"enabled":true}`,
-            `filter={"names":["${name}"],"enabled":true,"deleted":false}`,
-            `filter={"users":["${user}"],"enabled":true}`,
-            `filter={"users":["${user}"],"names":["${name}"],"enabled":true}`,
-            `filter={"enabled":true,"names":["${name}"],"users":["${user}"]}`,
-            `filter={"users":["${user}"],"enabled":true,"deleted":false}`,
             `filter={"users":["${user}"],"enabled":true,"names":["${name}"]}`,
-            `filter={"users":["${user}"],"enabled":true,"names":["${name}"],"deleted":false}`,
+            `filter={"users":["${user}"],"enabled":null,"names":["${name}"]}`,
         ].map((query) => ({
             request: {
                 method: HttpMethods.GET,

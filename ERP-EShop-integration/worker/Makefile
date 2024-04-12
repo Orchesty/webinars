@@ -18,8 +18,8 @@ Linux:
 
 # Build
 build: .env
-	docker buildx build --platform=linux/amd64 -f Dockerfile -t $(IMAGE) --pull .
-	docker push $(IMAGE)
+	if ! docker buildx inspect multi; then docker buildx create --name multi --platform linux/amd64,linux/arm64/v8 --use --bootstrap; fi
+	docker buildx build --push --platform linux/amd64,linux/arm64/v8 -t $(IMAGE) .
 
 docker-compose.ci.yml:
 	# Comment out any port forwarding

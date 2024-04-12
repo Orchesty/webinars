@@ -13,7 +13,7 @@ DW=$(DC) exec -T wordpress
 
 ALIAS?=alias
 Darwin:
-	sudo ifconfig lo0 $(ALIAS) $(shell awk '$$1 ~ /^DEV_IP/' .env.dist | sed -e "s/^DEV_IP=//") || true
+	sudo ifconfig lo0 $(ALIAS) $(shell awk '$$1 ~ /^DEV_IP/' .env | sed -e "s/^DEV_IP=//") || true
 Linux:
 	@echo 'skipping ...'
 .lo0-up:
@@ -83,7 +83,7 @@ exampleApp.json:
 	cat exampleApp.dist.json > exampleApp.json
 
 import-mongo-data: exampleApp.json
-	docker cp ./exampleApp.json erp-eshop-integration_mongo_1:/tmp
+	docker cp ./exampleApp.json erp-eshop-integration-mongo-1:/tmp
 	$(DCG) mongoimport --db "$(shell grep 'MAIN_DB' .env | cut -d "=" -f2)" --collection ApplicationInstall --file /tmp/exampleApp.json --jsonArray
 
 fresh-init: docker-down-clean init-dev wp-database-replace database-initialize plugin-initialize install-topology import-mongo-data
