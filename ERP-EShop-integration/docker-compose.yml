@@ -15,6 +15,7 @@ services:
             # Envs for tests are load from nodejs-sdk/.jest/testEnvs.js
             JEST_DOCKER: 1
             APP_ENV: debug
+            APP_PORT: 8000
             CRYPT_SECRET: ${CRYPT_SECRET}
             BACKEND_URL: ${BACKEND_URL}
             STARTING_POINT_DSN: ${STARTING_POINT_DSN}
