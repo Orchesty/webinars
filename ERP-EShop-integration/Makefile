@@ -66,10 +66,10 @@ plugin-initialize:
 	$(DW) curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	$(DW) php wp-cli.phar --allow-root core update
 	$(DW) php wp-cli.phar --allow-root core update-db
-	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
 	$(DW) php wp-cli.phar --allow-root plugin install wp-rest-cache --activate
 	$(DW) php wp-cli.phar --allow-root theme install storefront --activate
-	$(DW) php wp-cli.phar --allow-root wc update
+	$(DW) php wp-cli.phar --allow-root plugin install woocommerce --activate
+	#$(DW) php wp-cli.phar --allow-root wc update
 
 wp-database-replace:
 	sed -i "s|http://127.0.0.10|$(WP_DOMAIN)|g" ./WooCommerce/init.sql
