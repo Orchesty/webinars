@@ -21,7 +21,7 @@ services:
             ORCHESTY_API_KEY: ${ORCHESTY_API_KEY}
             REDIS_DSN: redis://redis
             MONGODB_DSN: ${MONGO_DSN}
-        command: sh -c 'pnpm run start'
+        command: sh -c 'pnpm i && pnpm run start'
         mem_limit: 512MB
         depends_on:
             - fluentd
@@ -172,6 +172,7 @@ services:
         image: rabbitmq:3-management-alpine
         ports:
             - ${DEV_IP}:15672:15672
+            - ${DEV_IP}:15692:15692
         volumes:
             - rabbitmq:/var/lib/rabbitmq
         mem_limit: 512MB
@@ -205,6 +206,26 @@ services:
             - ${DEV_IP}:3306:3306
         volumes:
             - mysql:/var/lib/mysql
+
+    prometheus:
+      image: prom/prometheus
+      volumes:
+          - ./Prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+      ports:
+          - ${DEV_IP}:9090:9090
+
+    grafana:
+        image: grafana/grafana
+        volumes:
+            - ./Grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+            - ./Grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+            - ./Grafana/dashboards:/var/lib/grafana/dashboards
+        environment:
+            GF_SECURITY_ADMIN_USER: root
+            GF_SECURITY_ADMIN_PASSWORD: root
+            GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
+        ports:
+            - ${DEV_IP}:3000:3000
 
     adminer:
         image: adminer

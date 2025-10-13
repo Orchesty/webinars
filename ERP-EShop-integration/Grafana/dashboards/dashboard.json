@@ -1,0 +1,121 @@
+{
+  "title": "Dashboard",
+  "refresh": "5s",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "messagesQueue",
+        "label": "Messages queue",
+        "type": "query",
+        "datasource": "Prometheus",
+        "refresh": 1,
+        "query": "query_result(rabbitmq_queue_messages{queue=~\"node.*\"} > 0)",
+        "regex": ".*queue=\"([^\"]*).*",
+        "multi": true,
+        "includeAll": true
+      },
+      {
+        "name": "processedQueue",
+        "label": "Published & acknowledged queue",
+        "type": "query",
+        "datasource": "Prometheus",
+        "refresh": 1,
+        "query": "query_result(rate(rabbitmq_queue_messages_published_total{queue=~\"node.*\"}[1m]) > 0 or rate(rabbitmq_channel_messages_acked_total{queue=~\"node.*\"}[1m]) > 0)",
+        "regex": ".*queue=\"([^\"]*).*",
+        "multi": true,
+        "includeAll": true
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Messages in $messagesQueue",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rabbitmq_queue_messages{queue=~\"$messagesQueue\"}",
+          "legendFormat": "{{queue}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Published per second in $processedQueue",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rate(rabbitmq_queue_messages_published_total{queue=~\"$processedQueue\"}[1m])",
+          "legendFormat": "{{queue}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Acknowledged per second in $processedQueue",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rate(rabbitmq_channel_messages_acked_total{queue=~\"$processedQueue\"}[1m])",
+          "legendFormat": "{{queue}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Published in $processedQueue",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rabbitmq_queue_messages_published_total{queue=~\"$processedQueue\"}",
+          "legendFormat": "{{queue}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Acknowledged in $processedQueue",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "expr": "rabbitmq_channel_messages_acked_total{queue=~\"$processedQueue\"}",
+          "legendFormat": "{{queue}}"
+        }
+      ]
+    }
+  ]
+}
