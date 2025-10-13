@@ -36,6 +36,7 @@ docker-up-force: .env .lo0-up
 	$(DC) up -d --force-recreate --remove-orphans
 	$(DC) run --rm wait-for-it rabbitmq:15672 -t 600
 	$(DR) rabbitmq-plugins enable rabbitmq_consistent_hash_exchange
+	$(DR) rabbitmq-plugins enable rabbitmq_prometheus
 	$(DB) bin/console doctrine:mongodb:schema:update --dm default
 	$(DB) bin/console doctrine:mongodb:schema:update --dm metrics
 	$(DB) bin/console mongodb:index:update
