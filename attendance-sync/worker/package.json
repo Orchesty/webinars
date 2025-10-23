@@ -1,0 +1,32 @@
+{
+  "name": "orchesty-attendence-sync-worker",
+  "description": "",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --detectOpenHandles --passWithNoTests",
+    "lint": "eslint src --fix",
+    "start": "nodemon src/index.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.prod.json && copyfiles -u 1 src/**/*.html dist/src/"
+  },
+  "keywords": [],
+  "author": "info@hanaboso.com",
+  "dependencies": {
+    "@orchesty/nodejs-sdk": "^4.3.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.38.0",
+    "@hanaboso/eslint-plugin": "^1.2.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.9.1",
+    "copyfiles": "^2.4.1",
+    "eslint": "^9.38.0",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.10",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
