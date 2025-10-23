@@ -1,0 +1,14 @@
+# IDEs
+.idea
+*.DS_Store
+
+# NODE
+worker/dist
+worker/coverage
+worker/node_modules
+worker/.pnpm-store
+
+# ORCHESTY
+.env
+topology/*
+!topology/.gitkeep
